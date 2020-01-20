@@ -68,14 +68,14 @@ namespace COMP2351_Game_Engine
                             List<ICreateCollider> colliderI = _sceneManager.GetEntity()[i].GetCollider();
                             List<ICreateCollider> colliderJ = _sceneManager.GetEntity()[j].GetCollider();
 
-                            // check overall collision box as an initial check for whether all colliders in an entity need to be checked
+                            // check midphase collisider
                             // Distance between x axis values for I and J
                             float Dx = Math.Abs(colliderI[0].CreateCollider()[0] - colliderJ[0].CreateCollider()[0]);
 
-                            // Distance between x axis values for I and J
+                            // Distance between y axis values for I and J
                             float Dy = Math.Abs(colliderI[0].CreateCollider()[1] - colliderJ[0].CreateCollider()[1]);
 
-
+                            // Check if D is less than half the width of I and J colliders combined for x and y
                             if ((Dx < (colliderI[0].CreateCollider()[2] + colliderJ[0].CreateCollider()[2]) * 0.5) && (Dy < (colliderI[0].CreateCollider()[3] + colliderJ[0].CreateCollider()[3]) * 0.5))
                             {
                                 colliderI.Remove(_sceneManager.GetEntity()[i].GetCollider()[0]);
@@ -97,7 +97,7 @@ namespace COMP2351_Game_Engine
                                         // Distance between y axis values for I and J
                                         Dy = Math.Abs(CheckColliderI[1] - CheckColliderJ[1]);
 
-                                        // Check collision
+                                        // Check if D is less than half the width of I and J colliders combined for x and y
                                         if ((Dx < (CheckColliderI[2] + CheckColliderJ[2]) * 0.5) && (Dy < (CheckColliderI[3] + CheckColliderJ[3]) * 0.5))
                                         {
                                             // colliding
@@ -108,12 +108,6 @@ namespace COMP2351_Game_Engine
                                             // publish collision
                                             OnNewCollision(collided, uID);
 
-                                            /*
-                                            //post the collision tag ,xPos ,yPos ,width ,height
-                                            Console.WriteLine(k.GetTag() + " " + CheckColliderI[0] + " " + CheckColliderI[1] + " " + CheckColliderI[2] + " " + CheckColliderI[3]);
-                                            Console.WriteLine(l.GetTag() + " " + CheckColliderJ[0] + " " + CheckColliderJ[1] + " " + CheckColliderJ[2] + " " + CheckColliderJ[3]);
-                                            // post the distance between the origin points of the collision in x and y
-                                            Console.WriteLine(Dx + " " + Dy);*/
                                         }
                                     }
                                 }
