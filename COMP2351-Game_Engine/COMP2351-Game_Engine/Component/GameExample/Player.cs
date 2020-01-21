@@ -81,10 +81,7 @@ namespace COMP2351_Game_Engine
         public override void Update()
         {
             // if there are no colliders then set them using SetCollider method
-            if (!hasCollider)
-            {
-                SetCollider();
-            }
+            
             if (_mind != null)
             {
                 //tell the mind the location of the player

@@ -75,10 +75,8 @@ namespace COMP2351_Game_Engine
         {
             location.X = pX;
             location.Y = pY;
-            if (hasCollider)
-            {
-                SetCollider();
-            }
+            // Set entity collider
+            SetCollider();
         }
 
         /// <summary>
