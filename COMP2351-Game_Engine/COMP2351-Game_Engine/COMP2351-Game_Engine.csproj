@@ -60,6 +60,7 @@
     <Compile Include="Component\GameExample\PlatformEndL.cs" />
     <Compile Include="Component\GameExample\Platform.cs" />
     <Compile Include="Component\GameExample\PlatformMind.cs" />
+    <Compile Include="Component\GameExample\PlayerDeathState.cs" />
     <Compile Include="Component\GameExample\Relic.cs" />
     <Compile Include="Component\GameExample\RelicMind.cs" />
     <Compile Include="Component\GameExample\Saw.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Interface\Engine\IMind.cs" />
     <Compile Include="Interface\Engine\IMouseInput.cs" />
     <Compile Include="Interface\Engine\IMouseListener.cs" />
+    <Compile Include="Interface\Engine\IState.cs" />
     <Compile Include="Interface\GameExample\IPlayer.cs" />
     <Compile Include="Interface\GameExample\IRelicHunterEntity.cs" />
     <Compile Include="Interface\Engine\ISceneGraph.cs" />

@@ -19,7 +19,7 @@ namespace COMP2351_Game_Engine
         private float _speed;
         // the valuse used to make the entity jump vertically
         private float _jump;
-        // used to push the ntity out of the floor when colliding
+        // used to push the entity out of the floor when colliding
         private float _counterForce;
         // the velocity of the entity
         private Vector2 _velocity;
@@ -35,6 +35,8 @@ namespace COMP2351_Game_Engine
         private bool _leftCollide;
         // score for the level
         private int _score;
+        // collision return value
+        bool rtnValue;
 
         public PlayerMind()
         {
@@ -63,6 +65,31 @@ namespace COMP2351_Game_Engine
             _leftCollide = false;
             // set starting score
             _score = 0;
+
+            // Declare required states
+            DeclareStates();
+        }
+
+        /// <summary>
+        /// Required states are declared here to be added to game code.
+        /// </summary>
+        private void DeclareStates()
+        {
+            _stateDictionary.Add("Death", new PlayerDeathState());
+        }
+
+        /// <summary>
+        /// State machine logic.
+        /// </summary>
+        private void StateMachine()
+        {
+            switch (_currentState)
+            {
+                case PlayerDeathState pds:
+                    // _stateDictionary[death].run;
+                    Console.WriteLine("'Player death state' activated");
+                    break;
+            }
         }
 
         /// <summary>
@@ -195,43 +222,75 @@ namespace COMP2351_Game_Engine
         public override bool OnNewCollision(ICollisionInput args)
         {
             // Run super
-            bool rtnValue = base.OnNewCollision(args);
+            rtnValue = base.OnNewCollision(args);
 
+            // Run floor collision logic
+            FloorCollision();
+
+            // On collision with Hostile Bottom collider(HosileB), or Saw collider
+            if (_collidedWith == "HostileB" && _collidedThis == "PlayerT" || _collidedWith == "HostileB" && _collidedThis == "PlayerB" || _collidedWith == "Saw" && _collidedThis == "PlayerT" || _collidedWith == "Saw" && _collidedThis == "PlayerB")
+            {
+                // Enter death state
+                _currentState = _stateDictionary["Death"];
+                // Run hostile collision logic
+                HostileCollision();
+            }               
+
+            // Run ceiling collision logic
+            CeilingCollision();
+
+            // Run boundary collision logic
+            BoundaryCollision();
+
+            // Run coin collision logic
+            CoinCollision();
+
+            // Run relic saw collision
+            RelicSawCollision();
+
+            // Reset Collided with and this to null
+            _collidedWith = null;
+            _collidedThis = null;
+            
+            // return rtnValue
+            return rtnValue;
+        }
+
+        private void FloorCollision()
+        {
             // on collision with Floor change floorCollide flag to true
             if (_collidedWith == "Floor" && _collidedThis == "PlayerB")
             {
                 _floorCollide = true;
             }
+        }
 
-            // on collision with Hostile Bottom collider(HosileB), or Saw collider
-            if (_collidedWith == "HostileB" && _collidedThis == "PlayerT" || _collidedWith == "HostileB" && _collidedThis == "PlayerB" || _collidedWith == "Saw" && _collidedThis == "PlayerT" || _collidedWith == "Saw" && _collidedThis == "PlayerB")
+        /// <summary>
+        /// Hostile collision logic
+        /// </summary>
+        private void HostileCollision()
+        {
+            // set return value to true to remove the player from the scene
+            rtnValue = true;
+
+            // reset floor collision flag statuses
+            _inAir = true;
+            _floorCollide = false;
+            _onFloor = false;
+
+            // lower players score value when having to respawn, cannot go below 0
+            if (_score > 0)
             {
-                // set return value to true to remove the player from the scene
-                rtnValue = true;
-
-                // reset floor collision flag statuses
-                _inAir = true;
-                _floorCollide = false;
-                _onFloor = false;
-
-                // lower players score value when having to respawn, cannot go below 0
-                if (_score > 0)
-                {
-                    _score -= 200;
-                }
-                if (_score < 0)
-                {
-                    _score = 0;
-                }
+                _score -= 200;
             }
-
-            // on collision between the ceiling and the player top collider
-            if (_collidedWith == "Ceiling" && _collidedThis == "PlayerT")
+            if (_score < 0)
             {
-                // set jump value to 0
-                _jump = 0;
+                _score = 0;
             }
+        }
 
+        private void BoundaryCollision()
+        {
             // on collision with the Bounday collider and the player while moving right
             if (_collidedWith == "Boundary" && _collidedThis == "PlayerM" && _facingDirectionX == 1)
             {
@@ -245,7 +304,20 @@ namespace COMP2351_Game_Engine
                 // set leftCollide flag to true
                 _leftCollide = true;
             }
+        }
 
+        private void CeilingCollision()
+        {
+            // on collision between the ceiling and the player top collider
+            if (_collidedWith == "Ceiling" && _collidedThis == "PlayerT")
+            {
+                // set jump value to 0
+                _jump = 0;
+            }
+        }
+
+        private void CoinCollision()
+        {
             // on Collision with a CoinGold collider and the player
             if (_collidedWith == "CoinGold" && _collidedThis == "PlayerB" || _collidedWith == "CoinGold" && _collidedThis == "PlayerT")
             {
@@ -253,7 +325,10 @@ namespace COMP2351_Game_Engine
                 _score += 100;
                 Console.WriteLine("Player Score: " + _score);
             }
+        }
 
+        private void RelicSawCollision()
+        {
             // on Collision with a RelicSaw collider and the player
             if (_collidedWith == "RelicSaw" && _collidedThis == "PlayerB" || _collidedWith == "RelicSaw" && _collidedThis == "PlayerT")
             {
@@ -262,13 +337,6 @@ namespace COMP2351_Game_Engine
                 Console.WriteLine("Player Score: " + _score);
                 Console.WriteLine("Bone Saw Relic Aquired");
             }
-
-            // Reset Collided with and this to null
-            _collidedWith = null;
-            _collidedThis = null;
-            
-            // return rtnValue
-            return rtnValue;
         }
 
         public override void Update()
@@ -291,6 +359,9 @@ namespace COMP2351_Game_Engine
                 // set jump to 0
                 _jump = 0;
             }
+
+            // Run state machine
+            StateMachine();
         }
     }
 }

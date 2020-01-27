@@ -28,6 +28,10 @@ namespace COMP2351_Game_Engine
         protected int _collidedThisUID;
         // enitity that collided with this entities collider UID
         protected int _collidedWithUID;
+        // dictionary storing state machine states
+        protected Dictionary<string, IState> _stateDictionary = new Dictionary<string, IState>();
+        // current state
+        protected IState _currentState;
 
         /// <summary>
         /// Updates entity location
