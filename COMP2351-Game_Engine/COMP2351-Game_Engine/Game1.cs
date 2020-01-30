@@ -36,7 +36,10 @@ namespace COMP2351_Game_Engine
         // reference to the engineDemo class
         private GameDemo gameDemo;
         // reference to the headerLoaction
-        private Vector2 headerLocation;
+        private Vector2 backgroundLocation;
+        private Vector2 backgroundLocation2;
+        private Vector2 backgroundLocation3;
+        private Vector2 backgroundLocation4;
         // camera position to follow the player
         private Vector3 cameraPos;
 
@@ -87,7 +90,10 @@ namespace COMP2351_Game_Engine
             inputManager.AddListener(((IKeyboardListener)gameDemo).OnNewKeyboardInput);
             inputManager.AddListener(((IMouseListener)gameDemo).OnNewMouseInput);
             // set headerLoaction
-            headerLocation = new Vector2(-ScreenWidth / 2, 0);
+            backgroundLocation = new Vector2(-ScreenWidth / 2, 0);
+            backgroundLocation2 = new Vector2(backgroundLocation.X + ScreenWidth + 1, 0);
+            backgroundLocation3 = new Vector2(-ScreenWidth / 2, 0);
+            backgroundLocation4 = new Vector2(-ScreenWidth / 2, 0);
             // initialise
             base.Initialize();
         }
@@ -104,7 +110,7 @@ namespace COMP2351_Game_Engine
             // TODO: use this.Content to load your game content here
 
             // set textures
-            textures = new Texture2D[] {Content.Load<Texture2D>("Header"), Content.Load<Texture2D>("Player"), Content.Load<Texture2D>("Hostile"), Content.Load<Texture2D>("Platform"), Content.Load<Texture2D>("Saw"), Content.Load<Texture2D>("CoinGold"), Content.Load<Texture2D>("Relic"), Content.Load<Texture2D>("Floor"), Content.Load<Texture2D>("Wall") };
+            textures = new Texture2D[] {Content.Load<Texture2D>("Background"), Content.Load<Texture2D>("Player"), Content.Load<Texture2D>("Hostile"), Content.Load<Texture2D>("Platform"), Content.Load<Texture2D>("Saw"), Content.Load<Texture2D>("CoinGold"), Content.Load<Texture2D>("Relic"), Content.Load<Texture2D>("Floor"), Content.Load<Texture2D>("Wall") };
 
             // load textures into engineDemo
             gameDemo.LoadTextures(textures);
@@ -174,14 +180,13 @@ namespace COMP2351_Game_Engine
             // Begin SpriteBatch
             spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Matrix.CreateTranslation(cameraPos));
             // syntax for the XNA 2d camera to follow the player is from https://www.reddit.com/r/monogame/comments/6lxd69/how_do_i_make_camera_follow_the_player/
-
+            //[TEST]Draw background
+            spriteBatch.Draw(textures[0], backgroundLocation, Color.LightPink);
             // Draw all entities from list
             foreach (IEntity e in sceneManager.GetEntity())
             {
                 e.Draw(spriteBatch);
             }
-            // Draw the header
-            //spriteBatch.Draw(textures[0], headerLocation, Color.AntiqueWhite);
             // end Spritebatch
             spriteBatch.End();
 
