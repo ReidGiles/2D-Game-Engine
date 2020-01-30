@@ -29,6 +29,8 @@ namespace COMP2351_Game_Engine
         private IAIComponentManager aiComponentManager;
         // reference to the input Manager
         private IInputManager inputManager;
+        // Reference to the render manager
+        private RenderManager _renderManager;
         // reference to the sceneGraph
         private ISceneGraph sceneGraph;
         // List of Textures
@@ -82,6 +84,8 @@ namespace COMP2351_Game_Engine
             aiComponentManager = new AIComponentManager(inputManager);
             // initialise a new entityManager
             entityManager = new EntityManager(collisionManager, sceneGraph, aiComponentManager);
+            // Initialise render manager
+            _renderManager = new RenderManager(graphics, sceneManager);
             // initialise a new engineDemo
             gameDemo = new GameDemo();
             // run engineDemo initialise method
@@ -157,38 +161,8 @@ namespace COMP2351_Game_Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // Set graphics background colour
-            GraphicsDevice.Clear(Color.Purple);
-
-            // Set cameraPos to follow the player on the x axis if there is one
-            if (sceneManager.GetEntity("Player") != null)
-            {
-                IEntity e = sceneManager.GetEntity("Player");
-                cameraPos.X = e.GetLocation().X * -1 + ScreenWidth / 2;
-                // if the player is higher than half the ScreenWidth then follow them on the y axis as well
-                if (e.GetLocation().Y < ScreenHeight / 2)
-                {
-                    cameraPos.Y = e.GetLocation().Y * -1 + ScreenHeight / 2;
-                }
-                else
-                {
-                    cameraPos.Y = 0;
-                }
-            }
-
-
-            // Begin SpriteBatch
-            spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Matrix.CreateTranslation(cameraPos));
-            // syntax for the XNA 2d camera to follow the player is from https://www.reddit.com/r/monogame/comments/6lxd69/how_do_i_make_camera_follow_the_player/
-            //[TEST]Draw background
-            spriteBatch.Draw(textures[0], backgroundLocation, Color.LightPink);
-            // Draw all entities from list
-            foreach (IEntity e in sceneManager.GetEntity())
-            {
-                e.Draw(spriteBatch);
-            }
-            // end Spritebatch
-            spriteBatch.End();
+            // Updates render manager
+            _renderManager.Update();
 
             base.Draw(gameTime);
         }

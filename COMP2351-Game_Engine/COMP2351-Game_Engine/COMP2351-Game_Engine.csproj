@@ -49,6 +49,7 @@
     <Compile Include="Component\Engine\EntityManager.cs" />
     <Compile Include="Component\Engine\MouseHandler.cs" />
     <Compile Include="Component\Engine\RectCollider.cs" />
+    <Compile Include="Component\Engine\RenderManager.cs" />
     <Compile Include="Component\GameExample\Floor.cs" />
     <Compile Include="Component\GameExample\FloorMind.cs" />
     <Compile Include="Component\GameExample\Gold.cs" />
