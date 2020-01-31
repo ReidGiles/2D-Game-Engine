@@ -80,12 +80,12 @@ namespace COMP2351_Game_Engine
             collisionManager = new CollisionManager(sceneManager);
             // initialise a new inputManager
             inputManager = new InputManager();
-            // initialise a new aiComponontManager
-            aiComponentManager = new AIComponentManager(inputManager);
-            // initialise a new entityManager
-            entityManager = new EntityManager(collisionManager, sceneGraph, aiComponentManager);
             // Initialise render manager
-            _renderManager = new RenderManager(graphics, sceneManager);
+            _renderManager = new RenderManager(graphics, sceneManager, Content);
+            // initialise a new aiComponontManager
+            aiComponentManager = new AIComponentManager(inputManager, (IAnimator)_renderManager);
+            // initialise a new entityManager
+            entityManager = new EntityManager(collisionManager, sceneGraph, aiComponentManager);           
             // initialise a new engineDemo
             gameDemo = new GameDemo();
             // run engineDemo initialise method
@@ -114,7 +114,7 @@ namespace COMP2351_Game_Engine
             // TODO: use this.Content to load your game content here
 
             // set textures
-            textures = new Texture2D[] {Content.Load<Texture2D>("Background"), Content.Load<Texture2D>("Player"), Content.Load<Texture2D>("Hostile"), Content.Load<Texture2D>("Platform"), Content.Load<Texture2D>("Saw"), Content.Load<Texture2D>("CoinGold"), Content.Load<Texture2D>("Relic"), Content.Load<Texture2D>("Floor"), Content.Load<Texture2D>("Wall") };
+            textures = new Texture2D[] {Content.Load<Texture2D>("Background"), Content.Load<Texture2D>("Player_Idle"), Content.Load<Texture2D>("Hostile"), Content.Load<Texture2D>("Platform"), Content.Load<Texture2D>("Saw"), Content.Load<Texture2D>("CoinGold"), Content.Load<Texture2D>("Relic"), Content.Load<Texture2D>("Floor"), Content.Load<Texture2D>("Wall") };
 
             // load textures into engineDemo
             gameDemo.LoadTextures(textures);

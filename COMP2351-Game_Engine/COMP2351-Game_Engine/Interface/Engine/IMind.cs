@@ -16,5 +16,6 @@ namespace COMP2351_Game_Engine
         float TranslateX();
         float TranslateY();
         bool OnNewCollision(ICollisionInput args);
+        void SetAnimator(IAnimator pAnimator);
     }
 }

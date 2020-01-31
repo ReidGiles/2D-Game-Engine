@@ -32,6 +32,13 @@ namespace COMP2351_Game_Engine
         protected Dictionary<string, IState> _stateDictionary = new Dictionary<string, IState>();
         // current state
         protected IState _currentState;
+        // Animator
+        protected IAnimator _animator;
+
+        public void SetAnimator(IAnimator pAnimator)
+        {
+            _animator = pAnimator;
+        }
 
         /// <summary>
         /// Updates entity location

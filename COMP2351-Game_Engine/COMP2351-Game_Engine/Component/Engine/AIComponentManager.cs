@@ -13,17 +13,21 @@ namespace COMP2351_Game_Engine
         private IList<IMind> _mindList;
         // reference to the input manager
         private IInputManager _inputManager;
+        // Reference to the render manager
+        private IAnimator _animator;
 
         /// <summary>
         /// //constructor for the AI component manager
         /// </summary>
         /// <param name="pInputManager"></param>
-        public AIComponentManager(IInputManager pInputManager)
+        public AIComponentManager(IInputManager pInputManager, IAnimator pAnimator)
         {
             //initialise _mindList
             _mindList = new List<IMind>();
             //initialise _inputManager
             _inputManager = pInputManager;
+            // Initialise _animator
+            _animator = pAnimator;
         }
 
         /// <summary>
@@ -35,6 +39,8 @@ namespace COMP2351_Game_Engine
         {
             //instanciate a new Mind
             IMind mind = new T();
+            // Deploy _animator to mind
+            mind.SetAnimator(_animator);
             // Add a keyboard listener if the class implements the interface for it
             if (mind is IKeyboardListener)
             {

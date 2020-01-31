@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace COMP2351_Game_Engine
@@ -19,13 +20,15 @@ namespace COMP2351_Game_Engine
         public static int ScreenHeight;
         // camera position to follow the player
         private Vector3 cameraPos;
+        // content manager
+        private ContentManager _content;
 
         /// <summary>
         /// Constructor for RenderManager
         /// </summary>
         /// <param name="graphicsDeviceManager"></param>
         /// <param name="sceneManager"></param>
-        public RenderManager(GraphicsDeviceManager graphicsDeviceManager, ISceneManager sceneManager)
+        public RenderManager(GraphicsDeviceManager graphicsDeviceManager, ISceneManager sceneManager, ContentManager pContentManager)
         {
             _graphicsDeviceManager = graphicsDeviceManager;
             _spriteBatch = new SpriteBatch(graphicsDeviceManager.GraphicsDevice);
@@ -36,6 +39,8 @@ namespace COMP2351_Game_Engine
             ScreenWidth = _graphicsDeviceManager.GraphicsDevice.Viewport.Width;
             // set cameraPos
             cameraPos = new Vector3(ScreenWidth / 2, 0, 0);
+            // Set content manager
+            _content = pContentManager;
         }
 
         /// <summary>
@@ -43,12 +48,12 @@ namespace COMP2351_Game_Engine
         /// </summary>
         /// <param name="pUName"></param>
         /// <param name="pTexture"></param>
-        public void SetTexture(string pUName, Texture2D pTexture)
+        public void SetTexture(string pUName, string pTextureName)
         {
             // Retrieve entity by unique name
-            IEntity e = _sceneManager.GetEntity(pUName);
+            IEntity e = _sceneManager.GetEntity(pUName);         
             // Set new texture for entity
-            e.SetTexture(pTexture);
+            e.SetTexture(_content.Load<Texture2D>(pTextureName));
         }
 
         /// <summary>

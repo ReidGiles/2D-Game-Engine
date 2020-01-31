@@ -9,6 +9,6 @@ namespace COMP2351_Game_Engine
 {
     interface IAnimator
     {
-        void SetTexture(string pUName, Texture2D pTexture);
+        void SetTexture(string pUName, string pTexture);
     }
 }
