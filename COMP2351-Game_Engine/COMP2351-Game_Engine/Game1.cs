@@ -30,7 +30,7 @@ namespace COMP2351_Game_Engine
         // reference to the input Manager
         private IInputManager inputManager;
         // Reference to the render manager
-        private RenderManager _renderManager;
+        private IUpdatable _renderManager;
         // reference to the sceneGraph
         private ISceneGraph sceneGraph;
         // List of Textures

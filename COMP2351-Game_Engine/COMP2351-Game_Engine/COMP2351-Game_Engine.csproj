@@ -62,10 +62,12 @@
     <Compile Include="Component\GameExample\Platform.cs" />
     <Compile Include="Component\GameExample\PlatformMind.cs" />
     <Compile Include="Component\GameExample\PlayerDeathState.cs" />
+    <Compile Include="Component\GameExample\PlayerIdleState.cs" />
     <Compile Include="Component\GameExample\Relic.cs" />
     <Compile Include="Component\GameExample\RelicMind.cs" />
     <Compile Include="Component\GameExample\Saw.cs" />
     <Compile Include="Component\GameExample\SawMind.cs" />
+    <Compile Include="Interface\Engine\IAnimator.cs" />
     <Compile Include="Interface\Engine\ICollider.cs" />
     <Compile Include="Interface\Engine\ICollisionInput.cs" />
     <Compile Include="Interface\Engine\ICollisionListener.cs" />

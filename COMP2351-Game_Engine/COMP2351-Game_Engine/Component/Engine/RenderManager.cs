@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace COMP2351_Game_Engine
 {
-    class RenderManager
+    class RenderManager : IUpdatable, IAnimator
     {
         private GraphicsDeviceManager _graphicsDeviceManager;
         private SpriteBatch _spriteBatch;
@@ -19,6 +19,12 @@ namespace COMP2351_Game_Engine
         public static int ScreenHeight;
         // camera position to follow the player
         private Vector3 cameraPos;
+
+        /// <summary>
+        /// Constructor for RenderManager
+        /// </summary>
+        /// <param name="graphicsDeviceManager"></param>
+        /// <param name="sceneManager"></param>
         public RenderManager(GraphicsDeviceManager graphicsDeviceManager, ISceneManager sceneManager)
         {
             _graphicsDeviceManager = graphicsDeviceManager;
@@ -31,6 +37,23 @@ namespace COMP2351_Game_Engine
             // set cameraPos
             cameraPos = new Vector3(ScreenWidth / 2, 0, 0);
         }
+
+        /// <summary>
+        /// Set the texture of an entity
+        /// </summary>
+        /// <param name="pUName"></param>
+        /// <param name="pTexture"></param>
+        public void SetTexture(string pUName, Texture2D pTexture)
+        {
+            // Retrieve entity by unique name
+            IEntity e = _sceneManager.GetEntity(pUName);
+            // Set new texture for entity
+            e.SetTexture(pTexture);
+        }
+
+        /// <summary>
+        /// Renders all active entities
+        /// </summary>
         public void Update()
         {
             // Set graphics background colour
@@ -51,7 +74,6 @@ namespace COMP2351_Game_Engine
                     cameraPos.Y = 0;
                 }
             }
-
 
             // Begin SpriteBatch
             _spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Matrix.CreateTranslation(cameraPos));
