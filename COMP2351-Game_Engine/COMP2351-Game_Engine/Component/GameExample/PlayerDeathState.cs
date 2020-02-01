@@ -8,5 +8,9 @@ namespace COMP2351_Game_Engine
 {
     class PlayerDeathState : IState
     {
+        public string Trigger()
+        {
+            return null;
+        }
     }
 }

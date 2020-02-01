@@ -1,23 +1,58 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 
 namespace COMP2351_Game_Engine
 {
     class PlayerJumpState : IState, IUpdatable
     {
         private IAnimator _animator;
-        private GameTime _gameTime;
-        public PlayerJumpState(IAnimator pAnimator)
+        // args to store the keyboard inputs
+        IKeyboardInput _args;
+        // string holding current texture
+        private string _currentTexture;
+
+        /// <summary>
+        /// PlayerJumpState constructor
+        /// </summary>
+        /// <param name="pAnimator"></param>
+        /// <param name="pArgs"></param>
+        public PlayerJumpState(IAnimator pAnimator, IKeyboardInput pArgs)
         {
             _animator = pAnimator;
+            _args = pArgs;
         }
+        /// <summary>
+        /// Updates the state
+        /// </summary>
         public void Update()
         {
-
+            Behavior("Player", "Player_Jump");
+        }
+        public string Trigger()
+        {
+            if ( !( _args.GetInputKey().Contains(Keys.Up) ) )
+            {
+                _currentTexture = null;
+                return "Idle";
+            }
+            return null;
+        }
+        /// <summary>
+        /// State behaviour logic
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="texture"></param>
+        private void Behavior(string entity, string texture)
+        {
+            if (_currentTexture != texture)
+            {
+                _animator.SetTexture(entity, texture);
+            }            
+            _currentTexture = texture;
         }
     }
 }

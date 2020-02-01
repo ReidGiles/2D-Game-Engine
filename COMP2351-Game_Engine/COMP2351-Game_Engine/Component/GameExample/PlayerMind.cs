@@ -37,6 +37,7 @@ namespace COMP2351_Game_Engine
         private int _score;
         // collision return value
         bool rtnValue;
+        bool statesDeclared;
 
         public PlayerMind()
         {
@@ -65,9 +66,6 @@ namespace COMP2351_Game_Engine
             _leftCollide = false;
             // set starting score
             _score = 0;
-
-            // Declare required states
-            DeclareStates();
         }
 
         /// <summary>
@@ -75,7 +73,10 @@ namespace COMP2351_Game_Engine
         /// </summary>
         private void DeclareStates()
         {
-            _stateDictionary.Add("Death", new PlayerDeathState());
+            _stateDictionary.Add("Idle", new PlayerIdleState(_animator, _args));
+            _stateDictionary.Add("Jump", new PlayerJumpState(_animator, _args));
+
+            _currentState = _stateDictionary["Idle"];
         }
 
         /// <summary>
@@ -83,12 +84,25 @@ namespace COMP2351_Game_Engine
         /// </summary>
         private void StateMachine()
         {
+            string trigger;
             switch (_currentState)
             {
-                case PlayerDeathState pds:
-                    // _stateDictionary[death].run;
-                    Console.WriteLine("'Player death state' activated");
+                case PlayerIdleState pis:
+                    ((IUpdatable)_stateDictionary["Idle"]).Update();
+                    trigger = _stateDictionary["Idle"].Trigger();
+                    if (trigger != null)
+                    {
+                        _currentState = _stateDictionary[trigger];
+                    }
                     break;
+                case PlayerJumpState pjs:
+                    ((IUpdatable)_stateDictionary["Jump"]).Update();
+                    trigger = _stateDictionary["Jump"].Trigger();
+                    if (trigger != null)
+                    {
+                        _currentState = _stateDictionary[trigger];
+                    }
+                    break;  
             }
         }
 
@@ -164,7 +178,7 @@ namespace COMP2351_Game_Engine
             if (!_floorCollide && _inAir)
             {
                 // if the character is in the air and not colliding with the floor then gravity is active
-                _gravity = 10;
+                _gravity = 10;               
             }
             else
             {
@@ -230,8 +244,6 @@ namespace COMP2351_Game_Engine
             // On collision with Hostile Bottom collider(HosileB), or Saw collider
             if (_collidedWith == "HostileB" && _collidedThis == "PlayerT" || _collidedWith == "HostileB" && _collidedThis == "PlayerB" || _collidedWith == "Saw" && _collidedThis == "PlayerT" || _collidedWith == "Saw" && _collidedThis == "PlayerB")
             {
-                // Enter death state
-                _currentState = _stateDictionary["Death"];
                 // Run hostile collision logic
                 HostileCollision();
             }               
@@ -358,6 +370,13 @@ namespace COMP2351_Game_Engine
             {
                 // set jump to 0
                 _jump = 0;
+            }
+
+            // Declare required states
+            if (!statesDeclared)
+            {
+                DeclareStates();
+                statesDeclared = true;
             }
 
             // Run state machine
