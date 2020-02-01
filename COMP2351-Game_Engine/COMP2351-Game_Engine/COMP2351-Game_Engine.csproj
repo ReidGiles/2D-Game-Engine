@@ -63,6 +63,7 @@
     <Compile Include="Component\GameExample\PlatformMind.cs" />
     <Compile Include="Component\GameExample\PlayerDeathState.cs" />
     <Compile Include="Component\GameExample\PlayerIdleState.cs" />
+    <Compile Include="Component\GameExample\PlayerJumpState.cs" />
     <Compile Include="Component\GameExample\Relic.cs" />
     <Compile Include="Component\GameExample\RelicMind.cs" />
     <Compile Include="Component\GameExample\Saw.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace COMP2351_Game_Engine
 {
-    class PlayerIdleState
+    class PlayerIdleState : IState
     {
     }
 }
