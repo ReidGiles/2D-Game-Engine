@@ -48,7 +48,7 @@ namespace COMP2351_Game_Engine
             // set gravity
             _gravity = 10;
             // set speed
-            _speed = 12;
+            _speed = 4;
             // set jump
             _jump = 0;
             // set counterforce
@@ -178,7 +178,7 @@ namespace COMP2351_Game_Engine
                     if (k == Keys.Up || k == Keys.Space || k == Keys.W)
                     {
                         // set jump value and inAir status to true, and onFloor status to false
-                        _jump = 25;
+                        _jump = 17;
                         _inAir = true;
                         _onFloor = false;
                     }

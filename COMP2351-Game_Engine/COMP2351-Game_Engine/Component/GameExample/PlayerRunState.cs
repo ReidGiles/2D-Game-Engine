@@ -38,7 +38,7 @@ namespace COMP2351_Game_Engine
             _gameTime = gameTime;
             _elapsedGameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             
-            if (_elapsedGameTime > 0.25)
+            if (_elapsedGameTime > 0.09)
             {
                 _animator.SetTexture("Player", Behavior());
                 Console.WriteLine("TexChange");
