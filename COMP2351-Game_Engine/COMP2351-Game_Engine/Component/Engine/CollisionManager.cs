@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -121,7 +122,7 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Runs publisher methods when input is detected
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             CheckCollision();
         }

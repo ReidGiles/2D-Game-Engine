@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace COMP2351_Game_Engine
 {
     class PlayerJumpState : IState, IUpdatable
     {
+        // animator to set textures/animate
         private IAnimator _animator;
         // args to store the keyboard inputs
         IKeyboardInput _args;
@@ -28,7 +30,7 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Updates the state
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             Behavior("Player", "Player_Jump");
         }

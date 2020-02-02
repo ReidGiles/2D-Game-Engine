@@ -38,7 +38,7 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Called by scene manager, updates entities on the scene.
         /// </summary>
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
         }
 

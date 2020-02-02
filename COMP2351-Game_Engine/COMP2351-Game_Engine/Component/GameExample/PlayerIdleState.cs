@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +15,18 @@ namespace COMP2351_Game_Engine
         IKeyboardInput _args;
         // string holding current texture
         private string _currentTexture;
+
         public PlayerIdleState(IAnimator pAnimator, IKeyboardInput pArgs)
         {
             _animator = pAnimator;
             _args = pArgs;
         }
-        public void Update()
+
+        public void Update(GameTime gameTime)
         {
             Behavior("Player", "Player_Idle");
         }
+
         public string Trigger()
         {
             foreach (Keys k in _args.GetInputKey())
@@ -31,6 +35,11 @@ namespace COMP2351_Game_Engine
                 {
                     _currentTexture = null;
                     return "Jump";
+                }
+                else if (k == Keys.Left || k == Keys.Right)
+                {
+                    _currentTexture = null;
+                    return "Run";
                 }
             }
             return null;

@@ -39,6 +39,8 @@ namespace COMP2351_Game_Engine
         bool rtnValue;
         bool statesDeclared;
 
+        private GameTime _gameTime;
+
         public PlayerMind()
         {
             // set args
@@ -75,6 +77,7 @@ namespace COMP2351_Game_Engine
         {
             _stateDictionary.Add("Idle", new PlayerIdleState(_animator, _args));
             _stateDictionary.Add("Jump", new PlayerJumpState(_animator, _args));
+            _stateDictionary.Add("Run", new PlayerRunState(_animator, _args));
 
             _currentState = _stateDictionary["Idle"];
         }
@@ -88,7 +91,7 @@ namespace COMP2351_Game_Engine
             switch (_currentState)
             {
                 case PlayerIdleState pis:
-                    ((IUpdatable)_stateDictionary["Idle"]).Update();
+                    ((IUpdatable)_stateDictionary["Idle"]).Update(_gameTime);
                     trigger = _stateDictionary["Idle"].Trigger();
                     if (trigger != null)
                     {
@@ -96,13 +99,21 @@ namespace COMP2351_Game_Engine
                     }
                     break;
                 case PlayerJumpState pjs:
-                    ((IUpdatable)_stateDictionary["Jump"]).Update();
+                    ((IUpdatable)_stateDictionary["Jump"]).Update(_gameTime);
                     trigger = _stateDictionary["Jump"].Trigger();
                     if (trigger != null)
                     {
                         _currentState = _stateDictionary[trigger];
                     }
-                    break;  
+                    break;
+                case PlayerRunState prs:
+                    ((IUpdatable)_stateDictionary["Run"]).Update(_gameTime);
+                    trigger = _stateDictionary["Run"].Trigger();
+                    if (trigger != null)
+                    {
+                        _currentState = _stateDictionary[trigger];
+                    }
+                    break;
             }
         }
 
@@ -351,8 +362,10 @@ namespace COMP2351_Game_Engine
             }
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
+            _gameTime = gameTime;
+
             // if floor Collide flag is true but there is no collision
             if (_floorCollide && _collidedWith == null)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,7 +63,7 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Runs publisher methods when input is detected
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             // look for changes in the input
 

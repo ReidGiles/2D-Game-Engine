@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace COMP2351_Game_Engine
 {
@@ -65,12 +66,12 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Updates all minds
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             //update each mind in the mind list
             foreach (IMind m in _mindList)
             {
-                ( (IUpdatable)m).Update();
+                ( (IUpdatable)m).Update(gameTime);
             }
         }
     }

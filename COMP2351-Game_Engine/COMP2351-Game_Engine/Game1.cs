@@ -143,11 +143,11 @@ namespace COMP2351_Game_Engine
                 Exit();
 
             // Update all the managers
-            ((IUpdatable)collisionManager).Update();
-            ((IUpdatable)sceneManager).Update();
-            ((IUpdatable)aiComponentManager).Update();
-            ((IUpdatable)inputManager).Update();
-            ((IUpdatable)entityManager).Update();
+            ((IUpdatable)collisionManager).Update(gameTime);
+            ((IUpdatable)sceneManager).Update(gameTime);
+            ((IUpdatable)aiComponentManager).Update(gameTime);
+            ((IUpdatable)inputManager).Update(gameTime);
+            ((IUpdatable)entityManager).Update(gameTime);
 
             // update teh engineDemo
             gameDemo.Update();
@@ -162,7 +162,7 @@ namespace COMP2351_Game_Engine
         protected override void Draw(GameTime gameTime)
         {
             // Updates render manager
-            _renderManager.Update();
+            _renderManager.Update(gameTime);
 
             base.Draw(gameTime);
         }

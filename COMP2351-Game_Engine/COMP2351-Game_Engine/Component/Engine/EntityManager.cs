@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace COMP2351_Game_Engine
 {
@@ -164,7 +165,7 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Update
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             /*
             // check each entity in the entity list to see if it needs to be removed

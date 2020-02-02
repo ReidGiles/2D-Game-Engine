@@ -125,7 +125,7 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Updates mind, called by AIComponentManager
         /// </summary>
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
         }
     }

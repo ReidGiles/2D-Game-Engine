@@ -122,12 +122,12 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Updated all entities inside the scene graph.
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             // Update all entities inside the scene graph
             foreach (IEntity e in _sceneGraph.GetEntity())
             {
-                ( (IUpdatable)e).Update();
+                ( (IUpdatable)e).Update(gameTime);
 
                 if (e.KillSelf())
                 {

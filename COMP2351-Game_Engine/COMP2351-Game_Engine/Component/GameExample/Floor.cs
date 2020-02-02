@@ -56,7 +56,7 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Overides Update() with unique entity behaviour.
         /// </summary>
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             // if there are no colliders then set them using SetCollider method
             if (!hasCollider)

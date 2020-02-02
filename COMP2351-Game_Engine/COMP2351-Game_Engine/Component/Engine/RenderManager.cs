@@ -59,7 +59,7 @@ namespace COMP2351_Game_Engine
         /// <summary>
         /// Renders all active entities
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             // Set graphics background colour
             _graphicsDeviceManager.GraphicsDevice.Clear(Color.Purple);
