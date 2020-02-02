@@ -34,10 +34,17 @@ namespace COMP2351_Game_Engine
         protected IState _currentState;
         // Animator
         protected IAnimator _animator;
+        // Audio player
+        protected IAudioPlayer _audioPlayer;
 
         public void SetAnimator(IAnimator pAnimator)
         {
             _animator = pAnimator;
+        }
+
+        public void SetAudioPlayer(IAudioPlayer pAudioPlayer)
+        {
+            _audioPlayer = pAudioPlayer;
         }
 
         /// <summary>

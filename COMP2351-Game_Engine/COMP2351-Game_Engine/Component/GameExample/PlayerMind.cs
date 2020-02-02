@@ -75,9 +75,9 @@ namespace COMP2351_Game_Engine
         /// </summary>
         private void DeclareStates()
         {
-            _stateDictionary.Add("Idle", new PlayerIdleState(_animator, _args));
-            _stateDictionary.Add("Jump", new PlayerJumpState(_animator, _args));
-            _stateDictionary.Add("Run", new PlayerRunState(_animator, _args));
+            _stateDictionary.Add("Idle", new PlayerIdleState(_animator, _audioPlayer, _args));
+            _stateDictionary.Add("Jump", new PlayerJumpState(_animator, _audioPlayer, _args));
+            _stateDictionary.Add("Run", new PlayerRunState(_animator, _audioPlayer, _args));
 
             _currentState = _stateDictionary["Idle"];
         }

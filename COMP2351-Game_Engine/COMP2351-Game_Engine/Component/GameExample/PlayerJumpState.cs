@@ -17,14 +17,17 @@ namespace COMP2351_Game_Engine
         // string holding current texture
         private string _currentTexture;
 
+        private IAudioPlayer _audioPlayer;
+
         /// <summary>
         /// PlayerJumpState constructor
         /// </summary>
         /// <param name="pAnimator"></param>
         /// <param name="pArgs"></param>
-        public PlayerJumpState(IAnimator pAnimator, IKeyboardInput pArgs)
+        public PlayerJumpState(IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
         {
             _animator = pAnimator;
+            _audioPlayer = pAudioPlayer;
             _args = pArgs;
         }
         /// <summary>
@@ -52,6 +55,7 @@ namespace COMP2351_Game_Engine
         {
             if (_currentTexture != texture)
             {
+                _audioPlayer.PlaySound("Jump");
                 _animator.SetTexture(entity, texture);
             }            
             _currentTexture = texture;

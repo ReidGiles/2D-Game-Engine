@@ -31,6 +31,8 @@ namespace COMP2351_Game_Engine
         private IInputManager inputManager;
         // Reference to the render manager
         private IUpdatable _renderManager;
+        // Reference to the audio manager
+        private IAudioPlayer _audioManager;
         // reference to the sceneGraph
         private ISceneGraph sceneGraph;
         // List of Textures
@@ -82,8 +84,10 @@ namespace COMP2351_Game_Engine
             inputManager = new InputManager();
             // Initialise render manager
             _renderManager = new RenderManager(graphics, sceneManager, Content);
+            // Initialise audio manager
+            _audioManager = new SoundManager(Content);
             // initialise a new aiComponontManager
-            aiComponentManager = new AIComponentManager(inputManager, (IAnimator)_renderManager);
+            aiComponentManager = new AIComponentManager(inputManager, (IAnimator)_renderManager, _audioManager);
             // initialise a new entityManager
             entityManager = new EntityManager(collisionManager, sceneGraph, aiComponentManager);           
             // initialise a new engineDemo

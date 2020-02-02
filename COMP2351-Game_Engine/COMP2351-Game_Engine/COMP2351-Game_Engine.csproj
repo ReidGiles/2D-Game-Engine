@@ -45,6 +45,7 @@
     <Compile Include="Component\Engine\CollisionHandler.cs" />
     <Compile Include="Component\Engine\CollisionManager.cs" />
     <Compile Include="Component\Engine\Demo\GameDemo.cs" />
+    <Compile Include="Component\Engine\Demo\SoundManager.cs" />
     <Compile Include="Component\Engine\Entity.cs" />
     <Compile Include="Component\Engine\EntityManager.cs" />
     <Compile Include="Component\Engine\MouseHandler.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Component\GameExample\Saw.cs" />
     <Compile Include="Component\GameExample\SawMind.cs" />
     <Compile Include="Interface\Engine\IAnimator.cs" />
+    <Compile Include="Interface\Engine\IAudioPlayer.cs" />
     <Compile Include="Interface\Engine\ICollider.cs" />
     <Compile Include="Interface\Engine\ICollisionInput.cs" />
     <Compile Include="Interface\Engine\ICollisionListener.cs" />

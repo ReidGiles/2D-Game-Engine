@@ -19,14 +19,18 @@ namespace COMP2351_Game_Engine
         // Game time
         private GameTime _gameTime;
 
-        private float _elapsedGameTime;
+        private IAudioPlayer _audioPlayer;
+
+        private float _renderTimer;
+        private float _soundTimer;
 
         /// <summary>
         /// Constructor for PlayerRunState
         /// </summary>
-        public PlayerRunState(IAnimator pAnimator, IKeyboardInput pArgs)
+        public PlayerRunState(IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
         {
             _animator = pAnimator;
+            _audioPlayer = pAudioPlayer;
             _args = pArgs;
         }
 
@@ -36,16 +40,28 @@ namespace COMP2351_Game_Engine
         public void Update(GameTime gameTime)
         {
             _gameTime = gameTime;
-            _elapsedGameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
-            if (_elapsedGameTime > 0.09)
+            _renderTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _soundTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (_renderTimer > 0.09)
             {
                 _animator.SetTexture("Player", Behavior());
                 Console.WriteLine("TexChange");
-                _elapsedGameTime = 0f;
+                _renderTimer = 0f;
+            }
+
+            if (_soundTimer > 0.3)
+            {
+                _audioPlayer.PlaySound("Run");
+                _soundTimer = 0f;
             }
         }
 
+        /// <summary>
+        /// State behaviour logic
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="texture"></param>
         public string Trigger()
         {
             if (!(_args.GetInputKey().Contains(Keys.Left)) && !(_args.GetInputKey().Contains(Keys.Right)))
