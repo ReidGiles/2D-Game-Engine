@@ -13,6 +13,12 @@ namespace COMP2351_Game_Engine
         // create a variable to store all the subscribers to the event
         public event EventHandler<ICollisionInput> NewCollisionHandler;
 
+        // Declare a variable for collison interpenetration Type:Vector2, called _overlap
+        private Vector2 _overlap;
+
+        // Declare a variable for collison normal Type:Vector2, called _cNormal
+        private Vector2 _cNormal;
+
         // refernce to the sceneGraph
         ISceneManager _sceneManager;
 
@@ -24,6 +30,12 @@ namespace COMP2351_Game_Engine
         {
             // initialise _sceneGraph
             _sceneManager = pSceneGraph;
+            // initialise _overlap
+            _overlap.X = 0;
+            _overlap.Y = 0;
+            // Initialise _cNormal
+            _cNormal.X = 0;
+            _cNormal.Y = 0;
         }
 
         /// <summary>
@@ -50,7 +62,38 @@ namespace COMP2351_Game_Engine
         }
 
         /// <summary>
-        /// Checks for collision
+        /// Method to check collisions on AABB
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
+        private bool AABB(ICreateCollider A, ICreateCollider B)
+        {
+            // Distance between x axis origin values for A and B
+            float Dx = Math.Abs(A.CreateCollider()[0] - B.CreateCollider()[0]);
+
+            // Distance between y axis origin values for A and B
+            float Dy = Math.Abs(A.CreateCollider()[1] - B.CreateCollider()[1]);
+
+            // Check if D is less than half the width of A and B colliders combined for x and y
+            if ((Dx < (A.CreateCollider()[2] + B.CreateCollider()[2]) * 0.5f) && (Dy < (A.CreateCollider()[3] + B.CreateCollider()[3]) * 0.5f))
+            {
+                _overlap.X = ((A.CreateCollider()[2] + B.CreateCollider()[2]) * 0.5f)-Dx;
+                _overlap.Y = ((A.CreateCollider()[3] + B.CreateCollider()[3]) * 0.5f)-Dy;
+                _cNormal.X = A.CreateCollider()[0] * B.CreateCollider()[0];
+                _cNormal.Y = A.CreateCollider()[1] * B.CreateCollider()[1];
+                _cNormal.Normalize();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
+        }
+
+        /// <summary>
+        /// Checks through the collider list for collisions
         /// </summary>
         private void CheckCollision()
         {
@@ -64,20 +107,13 @@ namespace COMP2351_Game_Engine
                         // check the entity has a collider set up
                         if (_sceneManager.GetEntity()[i].CheckCollider() && _sceneManager.GetEntity()[j].CheckCollider())
                         {
-                            // get a reference to the entities colliders for I and J
-                            
+                            // get a reference to the entities colliders for I and J                            
                             List<ICreateCollider> colliderI = _sceneManager.GetEntity()[i].GetCollider();
                             List<ICreateCollider> colliderJ = _sceneManager.GetEntity()[j].GetCollider();
-
-                            // check midphase collisider
-                            // Distance between x axis values for I and J
-                            float Dx = Math.Abs(colliderI[0].CreateCollider()[0] - colliderJ[0].CreateCollider()[0]);
-
-                            // Distance between y axis values for I and J
-                            float Dy = Math.Abs(colliderI[0].CreateCollider()[1] - colliderJ[0].CreateCollider()[1]);
-
+                                                        
+                            // check midphase collider
                             // Check if D is less than half the width of I and J colliders combined for x and y
-                            if ((Dx < (colliderI[0].CreateCollider()[2] + colliderJ[0].CreateCollider()[2]) * 0.5) && (Dy < (colliderI[0].CreateCollider()[3] + colliderJ[0].CreateCollider()[3]) * 0.5))
+                            if (AABB(colliderI[0], colliderJ[0]))
                             {
                                 colliderI.Remove(_sceneManager.GetEntity()[i].GetCollider()[0]);
                                 colliderJ.Remove(_sceneManager.GetEntity()[j].GetCollider()[0]);
@@ -88,18 +124,8 @@ namespace COMP2351_Game_Engine
                                     // each collider in j
                                     foreach (ICreateCollider l in colliderJ)
                                     {
-                                        // get the co-odinate points needed to check collision for I and J
-                                        float[] CheckColliderI = k.CreateCollider();
-                                        float[] CheckColliderJ = l.CreateCollider();
-
-                                        // Distance between x axis values for I and J
-                                        Dx = Math.Abs(CheckColliderI[0] - CheckColliderJ[0]);
-
-                                        // Distance between y axis values for I and J
-                                        Dy = Math.Abs(CheckColliderI[1] - CheckColliderJ[1]);
-
                                         // Check if D is less than half the width of I and J colliders combined for x and y
-                                        if ((Dx < (CheckColliderI[2] + CheckColliderJ[2]) * 0.5) && (Dy < (CheckColliderI[3] + CheckColliderJ[3]) * 0.5))
+                                        if (AABB(k,l))
                                         {
                                             // colliding
                                             // get the collider tag
