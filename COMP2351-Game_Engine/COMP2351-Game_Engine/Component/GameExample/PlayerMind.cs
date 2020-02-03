@@ -39,8 +39,6 @@ namespace COMP2351_Game_Engine
         bool rtnValue;
         bool statesDeclared;
 
-        private GameTime _gameTime;
-
         public PlayerMind()
         {
             // set args
@@ -80,41 +78,6 @@ namespace COMP2351_Game_Engine
             _stateDictionary.Add("Run", new PlayerRunState(_animator, _audioPlayer, _args));
 
             _currentState = _stateDictionary["Idle"];
-        }
-
-        /// <summary>
-        /// State machine logic.
-        /// </summary>
-        private void StateMachine()
-        {
-            string trigger;
-            switch (_currentState)
-            {
-                case PlayerIdleState pis:
-                    ((IUpdatable)_stateDictionary["Idle"]).Update(_gameTime);
-                    trigger = _stateDictionary["Idle"].Trigger();
-                    if (trigger != null)
-                    {
-                        _currentState = _stateDictionary[trigger];
-                    }
-                    break;
-                case PlayerJumpState pjs:
-                    ((IUpdatable)_stateDictionary["Jump"]).Update(_gameTime);
-                    trigger = _stateDictionary["Jump"].Trigger();
-                    if (trigger != null)
-                    {
-                        _currentState = _stateDictionary[trigger];
-                    }
-                    break;
-                case PlayerRunState prs:
-                    ((IUpdatable)_stateDictionary["Run"]).Update(_gameTime);
-                    trigger = _stateDictionary["Run"].Trigger();
-                    if (trigger != null)
-                    {
-                        _currentState = _stateDictionary[trigger];
-                    }
-                    break;
-            }
         }
 
         /// <summary>

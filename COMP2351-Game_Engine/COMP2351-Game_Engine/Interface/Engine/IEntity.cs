@@ -23,6 +23,5 @@ namespace COMP2351_Game_Engine
         void SetMind(IMind pMind);
         IMind GetMind();
         List<ICreateCollider> GetCollider();
-
     }
 }

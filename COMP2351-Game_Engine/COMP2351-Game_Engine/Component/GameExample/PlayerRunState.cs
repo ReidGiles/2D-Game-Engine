@@ -18,20 +18,27 @@ namespace COMP2351_Game_Engine
         private string _currentTexture = "Player_Run_1";
         // Game time
         private GameTime _gameTime;
-
+        // DECLARE an IAudioPlayer, call it '_audioPlayer'
         private IAudioPlayer _audioPlayer;
 
-        private float _renderTimer;
-        private float _soundTimer;
+        private float _renderTime;
+        private float _soundTime;
+
+        private float _frameTime;
 
         /// <summary>
         /// Constructor for PlayerRunState
         /// </summary>
         public PlayerRunState(IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
         {
+            // INSTANTIATE _animator
             _animator = pAnimator;
+            // INSTANTIATE _audioPlayer
             _audioPlayer = pAudioPlayer;
+            // INSTANTIATE _args
             _args = pArgs;
+
+            _frameTime = 0.09f;
         }
 
         /// <summary>
@@ -40,20 +47,22 @@ namespace COMP2351_Game_Engine
         public void Update(GameTime gameTime)
         {
             _gameTime = gameTime;
-            _renderTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _soundTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            // Calculate elapsed game time for animations
+            _renderTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            // Calculate elapsed game time for audio
+            _soundTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_renderTimer > 0.09)
+            if (_renderTime > _frameTime)
             {
                 _animator.SetTexture("Player", Behavior());
                 Console.WriteLine("TexChange");
-                _renderTimer = 0f;
+                _renderTime = 0f;
             }
 
-            if (_soundTimer > 0.3)
+            if (_soundTime > 0.3)
             {
                 _audioPlayer.PlaySound("Run");
-                _soundTimer = 0f;
+                _soundTime = 0f;
             }
         }
 
