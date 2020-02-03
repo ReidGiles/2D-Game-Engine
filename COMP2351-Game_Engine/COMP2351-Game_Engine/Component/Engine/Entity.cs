@@ -34,7 +34,9 @@ namespace COMP2351_Game_Engine
         protected bool hasCollider = false;
         // bool to flag for the entity to be terminated
         protected bool _killSelf = false;
-        
+        // bool to flag for horizontal inversion of a texture
+        private bool _invertedTexture = false;
+
         /// <summary>
         /// Called by scene manager, updates entities on the scene.
         /// </summary>
@@ -49,20 +51,31 @@ namespace COMP2351_Game_Engine
         public virtual void SetTexture(Texture2D pTexture)
         {
             texture = pTexture;
-            textureEffect = SpriteEffects.None;
+            if (_invertedTexture)
+            {
+                textureEffect = SpriteEffects.FlipHorizontally;
+            }
+            else
+            {
+                textureEffect = SpriteEffects.None;
+            }
+            
             rotation = 0;
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
         }
 
         protected void InvertTexture(float pfacingDirection)
         {
-            if (pfacingDirection == 1)
+            
+            if (pfacingDirection == -1 && !_invertedTexture)
             {
-                textureEffect = SpriteEffects.None;
+                _invertedTexture = true;
             }
-            else
+            
+            if(pfacingDirection == 1)
             {
-                textureEffect = SpriteEffects.FlipHorizontally;
+                
+                _invertedTexture = false;
             }
         }
 
