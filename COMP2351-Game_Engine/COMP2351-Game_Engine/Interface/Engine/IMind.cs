@@ -18,5 +18,6 @@ namespace COMP2351_Game_Engine
         bool OnNewCollision(ICollisionInput args);
         void SetAnimator(IAnimator pAnimator);
         void SetAudioPlayer(IAudioPlayer pAudioPlayer);
+        void StateMachine();
     }
 }

@@ -36,6 +36,8 @@ namespace COMP2351_Game_Engine
         protected IAnimator _animator;
         // Audio player
         protected IAudioPlayer _audioPlayer;
+        // Game Time
+        protected GameTime _gameTime;
 
         public void SetAnimator(IAnimator pAnimator)
         {
@@ -45,6 +47,41 @@ namespace COMP2351_Game_Engine
         public void SetAudioPlayer(IAudioPlayer pAudioPlayer)
         {
             _audioPlayer = pAudioPlayer;
+        }
+
+        /// <summary>
+        /// State machine logic.
+        /// </summary>
+        public void StateMachine()
+        {
+            string trigger;
+            switch (_currentState)
+            {
+                case PlayerIdleState pis:
+                    ((IUpdatable)_stateDictionary["Idle"]).Update(_gameTime);
+                    trigger = _stateDictionary["Idle"].Trigger();
+                    if (trigger != null)
+                    {
+                        _currentState = _stateDictionary[trigger];
+                    }
+                    break;
+                case PlayerJumpState pjs:
+                    ((IUpdatable)_stateDictionary["Jump"]).Update(_gameTime);
+                    trigger = _stateDictionary["Jump"].Trigger();
+                    if (trigger != null)
+                    {
+                        _currentState = _stateDictionary[trigger];
+                    }
+                    break;
+                case PlayerRunState prs:
+                    ((IUpdatable)_stateDictionary["Run"]).Update(_gameTime);
+                    trigger = _stateDictionary["Run"].Trigger();
+                    if (trigger != null)
+                    {
+                        _currentState = _stateDictionary[trigger];
+                    }
+                    break;
+            }
         }
 
         /// <summary>
