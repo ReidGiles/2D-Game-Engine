@@ -31,11 +31,9 @@ namespace COMP2351_Game_Engine
             // initialise _sceneGraph
             _sceneManager = pSceneGraph;
             // initialise _overlap
-            _overlap.X = 0;
-            _overlap.Y = 0;
+            _overlap = new Vector2(0,0);
             // Initialise _cNormal
-            _cNormal.X = 0;
-            _cNormal.Y = 0;
+            _cNormal = new Vector2(0, 0);
         }
 
         /// <summary>
@@ -43,10 +41,10 @@ namespace COMP2351_Game_Engine
         /// </summary>
         /// <param name="pCollided"></param>
         /// <param name="pUID"></param>
-        protected virtual void OnNewCollision(String[] pCollided, int[] pUID)
+        protected virtual void OnNewCollision(String[] pCollided, int[] pUID, Vector2 pOverlap, Vector2 pCNormal)
         {
             // pass the parameters into the new keybaord input then add to NewKeyboardInput
-            ICollisionInput args = new CollisionHandler(pCollided, pUID);
+            ICollisionInput args = new CollisionHandler(pCollided, pUID, pOverlap, pCNormal);
             NewCollisionHandler(this, args);
             
         }
@@ -78,10 +76,12 @@ namespace COMP2351_Game_Engine
             // Check if D is less than half the width of A and B colliders combined for x and y
             if ((Dx < (A.CreateCollider()[2] + B.CreateCollider()[2]) * 0.5f) && (Dy < (A.CreateCollider()[3] + B.CreateCollider()[3]) * 0.5f))
             {
-                _overlap.X = ((A.CreateCollider()[2] + B.CreateCollider()[2]) * 0.5f)-Dx;
-                _overlap.Y = ((A.CreateCollider()[3] + B.CreateCollider()[3]) * 0.5f)-Dy;
-                _cNormal.X = A.CreateCollider()[0] * B.CreateCollider()[0];
-                _cNormal.Y = A.CreateCollider()[1] * B.CreateCollider()[1];
+                // find overlap
+                _overlap.X = ((A.CreateCollider()[2] + B.CreateCollider()[2]) * 0.5f) - Dx;
+                _overlap.Y = ((A.CreateCollider()[3] + B.CreateCollider()[3]) * 0.5f) - Dy;
+                // find cNormal
+                _cNormal.X = B.CreateCollider()[0] - A.CreateCollider()[0];
+                _cNormal.Y = B.CreateCollider()[1] - A.CreateCollider()[1];
                 _cNormal.Normalize();
                 return true;
             }
@@ -133,7 +133,7 @@ namespace COMP2351_Game_Engine
                                             // get the colliding entity ID
                                             int[] uID = { _sceneManager.GetEntity()[i].GetUID(), _sceneManager.GetEntity()[j].GetUID() };
                                             // publish collision
-                                            OnNewCollision(collided, uID);
+                                            OnNewCollision(collided, uID,_overlap,_cNormal);
 
                                         }
                                     }

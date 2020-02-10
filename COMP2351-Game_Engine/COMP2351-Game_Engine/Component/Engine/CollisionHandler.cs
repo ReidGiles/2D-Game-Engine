@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,17 +14,25 @@ namespace COMP2351_Game_Engine
         // int containing the UIDs of the entities that collided
         private int[] _UID;
 
+        private Vector2 _overlap;
+
+        private Vector2 _cNormal;
+
         /// <summary>
         /// constrcutor for the collision handler
         /// </summary>
         /// <param name="pCollided"></param>
         /// <param name="pUID"></param>
-        public CollisionHandler(String[] pCollided, int[] pUID)
+        public CollisionHandler(String[] pCollided, int[] pUID,Vector2 pOverlap, Vector2 pCNormal)
         {
             //Initialise _collided
             _collided = pCollided;
             //Initialise _UID
             _UID = pUID;
+
+            _overlap = pOverlap;
+
+            _cNormal = pCNormal;
         }
 
         /// <summary>
@@ -42,6 +51,16 @@ namespace COMP2351_Game_Engine
         public int[] GetUID()
         {
             return _UID;
+        }
+
+        public Vector2 GetOverlap()
+        {
+            return _overlap;
+        }
+
+        public Vector2 GetCNormal()
+        {
+            return _cNormal;
         }
     }
 }

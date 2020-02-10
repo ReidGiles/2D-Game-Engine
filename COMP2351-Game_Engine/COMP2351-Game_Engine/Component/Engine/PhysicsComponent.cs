@@ -34,8 +34,7 @@ namespace COMP2351_Game_Engine.Component.Engine
         public PhysicsComponent(Vector2 position,float mass, float restitution,float damping)
         {
             // Set gravity
-            _gravity.X = 0;
-            _gravity.Y = 9.8f;
+            _gravity = new Vector2(0,9.8f);
 
             // Set _position
             _position = position;
@@ -67,7 +66,7 @@ namespace COMP2351_Game_Engine.Component.Engine
             _velocity *= _damping;
             _velocity += _acceleration;
             _position += _velocity;
-            _acceleration -= _gravity;
+            _acceleration = -_gravity;
         }
 
         public void ApplyImpulse(Vector2 closingVelocity)
