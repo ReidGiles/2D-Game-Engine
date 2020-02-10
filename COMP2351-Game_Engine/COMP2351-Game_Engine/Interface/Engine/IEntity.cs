@@ -11,6 +11,7 @@ namespace COMP2351_Game_Engine
     interface IEntity : IDrawable
     {
         void SetTexture(Texture2D pTexture);
+        void SetTexture(Texture2D pTextureAtlas, int pRows, int pColumns, int pCurrentFrame);
         void SetLocation(float pX, float pY);
         Vector2 GetLocation();
         void SetAIComponentManager(IAIComponentManager pAIComponentManger);
