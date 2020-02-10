@@ -13,16 +13,8 @@ namespace COMP2351_Game_Engine
     {
         // args to store the keyboard inputs
         IKeyboardInput _args;
-        // the effect of gravity on the entity
-        private float _gravity;
         // the movement speed of the entity
-        private float _speed;
-        // the valuse used to make the entity jump vertically
-        private float _jump;
-        // used to push the entity out of the floor when colliding
-        private float _counterForce;
-        // the velocity of the entity
-        private Vector2 _velocity;
+        private Vector2 _force;
         // floor collision flag
         private bool _floorCollide;
         // in air flag
@@ -43,17 +35,9 @@ namespace COMP2351_Game_Engine
         {
             // set args
             _args = new KeyboardHandler();
-            // set gravity
-            _gravity = 10;
-            // set speed
-            _speed = 4;
-            // set jump
-            _jump = 0;
-            // set counterforce
-            _counterForce = 0;
-            // set velocity
-            _velocity.X = 1;
-            _velocity.Y = -1;
+            // set _force
+            _force = new Vector2(4,0);
+
             // set facing direction
             _facingDirectionX = 1;
             // set player mind ID
@@ -89,8 +73,8 @@ namespace COMP2351_Game_Engine
             _args = args;
         }
 
-        // TranslateX override for player specific movement
-        public override float TranslateX()
+        // Handle Key input
+        private void KeyboardInput()
         {
             // Player input controlling movement, only active on key down
             foreach (Keys k in _args.GetInputKey())
@@ -98,112 +82,44 @@ namespace COMP2351_Game_Engine
                 // if player presses right arrow or D
                 if (k == Keys.Right || k == Keys.D)
                 {
-                    // check for collision on the right side of the player
-                    if (_rightCollide)
-                    {
-                        // if colliding move the opposite direction
-                        return (_speed * _facingDirectionX*-1) * _velocity.X;
-                    }
                     // set facing direction to right(1)
                     _facingDirectionX = 1;
-                    // move the player
-                    return (_speed * _facingDirectionX) * _velocity.X;
                 }
 
                 // if player presses left arrow or A
                 if (k == Keys.Left || k == Keys.A)
                 {
-                    // check for collision on the left side of the player
-                    if (_leftCollide)
-                    {
-                        // if colliding move the opposite direction
-                        return (_speed * _facingDirectionX * -1) * _velocity.X;
-                    }
                     // set facing direction to left(-1)
                     _facingDirectionX = -1;
-                    // move the player
-                    return (_speed * _facingDirectionX) * _velocity.X;
                 }
-            }
-            return 0;
-        }
 
-        // TranslateY override for player specific movement
-        public override float TranslateY()
-        {
-            // if player is not inAir
-            if (!_inAir)
-            {
-                // Player input controlling movement, only active on key down
-                foreach (Keys k in _args.GetInputKey())
+                // if player is not inAir
+                if (!_inAir)
                 {
                     // if player presses up arrow, W, or space
                     if (k == Keys.Up || k == Keys.Space || k == Keys.W)
                     {
-                        // set jump value and inAir status to true, and onFloor status to false
-                        _jump = 17;
+                        // set jump value and inAir status to true
+                        _force.Y = 17;
                         _inAir = true;
-                        _onFloor = false;
                     }
                 }
-            }
 
-            // Gravity, always active
-            if (!_floorCollide && _inAir)
-            {
-                // if the character is in the air and not colliding with the floor then gravity is active
-                _gravity = 10;               
+                _physicsComponent.ApplyForce(_force);
             }
-            else
-            {
-                // the player is colliding with the floor so inAir is false and gravity is set to 0 to emulate the floor holding the entity
-                _inAir = false;
-                _gravity = 0;
-            }
+        }
 
-            // if onFloor status is false but the entity is colliding with the floor and not in the air
-            if (!_onFloor && _floorCollide && !_inAir)
-            {
-                // ensure gravity is still 0
-                _gravity = 0;
-                // set counterforce to push the entity ot of the floor
-                _counterForce = 1;
-            }
+        // TranslateX override for player specific movement
+        public override float TranslateX()
+        {
+            return Math.Abs(_physicsComponent.GetPosition().X -_location.X)*_facingDirectionX;
+        }
 
-            // if the entity has just been pushed out of the floor and is now not colliding with it
-            if (!_onFloor && !_floorCollide && !_inAir)
-            {
-                // set onFloor status to true and set counter force to push the entity back into collision with the floor
-                _onFloor = true;
-                _counterForce = -1;
-            }
-
-            // if the onFloor Status is true and the entity is colliding with the floor
-            if (_onFloor && _floorCollide)
-            {
-                // set counterforce to 0 to leave the entity colliding with the floor
-                _counterForce = 0;
-            }
-
-            // if the onFloor status is true and the entity is not colliding with the floorCollide and also isnt being pushed out/into the floor
-            if (_onFloor && !_floorCollide && _counterForce == 0)
-            {
-                // then the entity is in the air
-                _inAir = true;
-                _onFloor = false;
-            }
-
-            
-            // if Right or Left collision flag is true
-            if (_leftCollide || _rightCollide)
-            {
-                // set collision flags to false
-                _rightCollide = false;
-                _leftCollide = false;
-            }
-
+        // TranslateY override for player specific movement
+        public override float TranslateY()
+        {          
             // apply gravity to the entity
-            return (_jump - _gravity + _counterForce) * _velocity.Y;
+            return _physicsComponent.GetPosition().Y - _location.Y;
         }
 
         // Handles new collisions args passed by entity
@@ -248,6 +164,9 @@ namespace COMP2351_Game_Engine
             if (_collidedWith == "Floor" && _collidedThis == "PlayerB")
             {
                 _floorCollide = true;
+                _inAir = false;
+                _location.Y += -_overlap.Y;
+                _physicsComponent.RemoveOverlapY(-_overlap.Y);
             }
         }
 
@@ -298,7 +217,7 @@ namespace COMP2351_Game_Engine
             if (_collidedWith == "Ceiling" && _collidedThis == "PlayerT")
             {
                 // set jump value to 0
-                _jump = 0;
+                _force.Y = 0;
             }
         }
 
@@ -337,15 +256,15 @@ namespace COMP2351_Game_Engine
             }
 
             // If player has jumped
-            if (_jump > 0)
+            if (_force.Y > 0)
             {
                 // decrement jump
-                _jump -= 0.4f;
+                _force.Y -= 0.4f;
             } // if jump is less than 0
-            else if (_jump < 0)
+            else if (_force.Y < 0)
             {
                 // set jump to 0
-                _jump = 0;
+                _force.Y = 0;
             }
 
             // Declare required states
