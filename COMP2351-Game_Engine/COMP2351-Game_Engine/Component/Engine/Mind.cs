@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using COMP2351_Game_Engine.Component.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -29,12 +28,6 @@ namespace COMP2351_Game_Engine
         protected int _collidedThisUID;
         // enitity that collided with this entities collider UID
         protected int _collidedWithUID;
-        // overlap of collided entities
-        protected Vector2 _overlap;
-        // cNormal of collided entities
-        protected Vector2 _cNormal;
-        // Physics component
-        protected PhysicsComponent _physicsComponent;
         // dictionary storing state machine states
         protected Dictionary<string, IState> _stateDictionary = new Dictionary<string, IState>();
         // current state
@@ -123,11 +116,6 @@ namespace COMP2351_Game_Engine
             _colliders = pColliders;
         }
 
-        public virtual void SetPhysicsComponent(PhysicsComponent pPhysicsComponent)
-        {
-            _physicsComponent = pPhysicsComponent;
-        }
-
         /// <summary>
         /// Translates x position
         /// </summary>
@@ -172,14 +160,11 @@ namespace COMP2351_Game_Engine
                         _collidedThisUID = args.GetUID()[1];
                         _collidedWithUID = args.GetUID()[0];
                     }
-                    _overlap = args.GetOverlap();
-                    _cNormal = args.GetCNormal();
                 }
             } 
             //return whether the entity should kill itself
             return false;
         }
-
 
         /// <summary>
         /// Updates mind, called by AIComponentManager

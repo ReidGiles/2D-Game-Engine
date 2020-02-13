@@ -5,14 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using COMP2351_Game_Engine.Component.Engine;
 
 namespace COMP2351_Game_Engine
 {
     class Player : RelicHunterEntity, IPlayer, ICollisionListener
     {
-        PhysicsComponent _physicsComponent;
-
         public Player()
         {
         }
@@ -24,9 +21,6 @@ namespace COMP2351_Game_Engine
         {
             // Set initial entity mind:
             _mind = _aiComponentManager.RequestMind<PlayerMind>();
-
-            _physicsComponent = new PhysicsComponent(location,1,0.9f,0.9f);
-            _mind.SetPhysicsComponent(_physicsComponent);
         }
 
         public void OnNewCollision(object sender, ICollisionInput args)
@@ -92,10 +86,8 @@ namespace COMP2351_Game_Engine
             {
                 //tell the mind the location of the player
                 _mind.UpdateLocation(location);
-                //tell the mind the value for texture and check to see if texture needs to be inverted
+                //tell the mind the value fo texture and check to see if texture needs to be inverted
                 InvertTexture(_mind.UpdateTexture(texture));
-                // Update PhysicsComponent
-                _physicsComponent.UpdatePhysics();
                 //updates the position of the player
                 float DX = _mind.TranslateX();
                 float DY = _mind.TranslateY();

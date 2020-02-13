@@ -34,7 +34,7 @@ namespace COMP2351_Game_Engine.Component.Engine
         public PhysicsComponent(Vector2 position,float mass, float restitution,float damping)
         {
             // Set gravity
-            _gravity = new Vector2(0,1f);
+            _gravity = new Vector2(0,9.8f);
 
             // Set _position
             _position = position;
@@ -47,9 +47,6 @@ namespace COMP2351_Game_Engine.Component.Engine
 
             // Set _damping
             _damping = damping;
-
-            _velocity = new Vector2(0, 0);
-            _acceleration = new Vector2(0, 0);
         }
 
         /// <summary>
@@ -69,23 +66,13 @@ namespace COMP2351_Game_Engine.Component.Engine
             _velocity *= _damping;
             _velocity += _acceleration;
             _position += _velocity;
-            _acceleration = _gravity;
+            _acceleration = -_gravity;
         }
 
         public void ApplyImpulse(Vector2 closingVelocity)
         {
             closingVelocity *= _restitution;
             _velocity += closingVelocity;
-        }
-
-        public Vector2 GetPosition()
-        {
-            return _position;
-        }
-
-        public void RemoveOverlapY(float pOverlapY)
-        {
-            _position.Y += pOverlapY;
         }
     }
 }
