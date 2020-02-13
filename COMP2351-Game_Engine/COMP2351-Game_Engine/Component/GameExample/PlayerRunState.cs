@@ -46,13 +46,18 @@ namespace COMP2351_Game_Engine
         /// </summary>
         public void Update(GameTime gameTime)
         {
-
             _gameTime = gameTime;
-
-            _animator.Animate("Player", "SmileyWalkAtlas", 4, 4, 0.009f);
-
+            // Calculate elapsed game time for animations
+            _renderTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             // Calculate elapsed game time for audio
             _soundTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (_renderTime > _frameTime)
+            {
+                _animator.SetTexture("Player", Behavior());
+                Console.WriteLine("TexChange");
+                _renderTime = 0f;
+            }
 
             if (_soundTime > 0.3)
             {
