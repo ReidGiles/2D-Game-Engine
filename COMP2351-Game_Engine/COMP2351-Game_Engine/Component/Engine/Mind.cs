@@ -145,6 +145,15 @@ namespace COMP2351_Game_Engine
         }
 
         /// <summary>
+        /// Translates y position
+        /// </summary>
+        public virtual Vector2 Translate()
+        {
+            Vector2 dPos = new Vector2(0, 0);
+            return dPos;
+        }
+
+        /// <summary>
         /// called when a collision event occures
         /// </summary>
         /// <param name="args"></param>

@@ -17,6 +17,7 @@ namespace COMP2351_Game_Engine
         void SetPhysicsComponent(PhysicsComponent pPhysicsComponent);
         float TranslateX();
         float TranslateY();
+        Vector2 Translate();
         bool OnNewCollision(ICollisionInput args);
         void SetAnimator(IAnimator pAnimator);
         void SetAudioPlayer(IAudioPlayer pAudioPlayer);

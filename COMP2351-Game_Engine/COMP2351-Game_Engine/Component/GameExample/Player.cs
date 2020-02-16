@@ -25,7 +25,7 @@ namespace COMP2351_Game_Engine
             // Set initial entity mind:
             _mind = _aiComponentManager.RequestMind<PlayerMind>();
 
-            _physicsComponent = new PhysicsComponent(location,1,0.9f,0.9f);
+            _physicsComponent = new PhysicsComponent(location,1,new Vector2(0f, 0.9f),new Vector2(0f,0.9f));
             _mind.SetPhysicsComponent(_physicsComponent);
         }
 
@@ -94,16 +94,18 @@ namespace COMP2351_Game_Engine
                 _mind.UpdateLocation(location);
                 //tell the mind the value for texture and check to see if texture needs to be inverted
                 InvertTexture(_mind.UpdateTexture(texture));
-                // Update PhysicsComponent
-                _physicsComponent.UpdatePhysics();
                 //updates the position of the player
-                float DX = _mind.TranslateX();
-                float DY = _mind.TranslateY();
-                Translate(DX, DY);
+                //float DX = _mind.TranslateX();
+                //float DY = _mind.TranslateY();
+                //Translate(DX, DY);
+                // Change in Entity location
+                Vector2 dlocation;
+                dlocation = _mind.Translate();
+                Translate(dlocation);
                 // updates the position of the colliders to follow the player
                 foreach (ICollider e in _colliders)
                 {
-                    e.Translate(DX, DY);
+                    e.Translate(dlocation);
                 }
 
             }

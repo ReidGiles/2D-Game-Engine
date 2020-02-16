@@ -210,6 +210,15 @@ namespace COMP2351_Game_Engine
         }
 
         /// <summary>
+        /// Updates entity location using a Vector2.
+        /// </summary>
+        /// <param name="dPos"></param>
+        public virtual void Translate(Vector2 dPos)
+        {
+            location += dPos;
+        }
+
+        /// <summary>
         /// Returns entity unique identification.
         /// </summary>
         public int GetUID()

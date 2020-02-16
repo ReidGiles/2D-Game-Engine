@@ -49,12 +49,12 @@ namespace COMP2351_Game_Engine
         {
             foreach (Keys k in _args.GetInputKey())
             {
-                if (k == Keys.Up)
+                if (k == Keys.Up || k == Keys.Space || k == Keys.W)
                 {
                     _currentTexture = null;
                     return "Jump";
                 }
-                else if (k == Keys.Left || k == Keys.Right)
+                else if (k == Keys.Left || k == Keys.Right || k == Keys.A|| k == Keys.D)
                 {
                     _currentTexture = null;
                     return "Run";

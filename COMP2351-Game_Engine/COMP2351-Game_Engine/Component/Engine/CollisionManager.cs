@@ -77,8 +77,8 @@ namespace COMP2351_Game_Engine
             if ((Dx < (A.CreateCollider()[2] + B.CreateCollider()[2]) * 0.5f) && (Dy < (A.CreateCollider()[3] + B.CreateCollider()[3]) * 0.5f))
             {
                 // find overlap
-                _overlap.X = ((A.CreateCollider()[2] + B.CreateCollider()[2]) * 0.5f) - Dx;
-                _overlap.Y = ((A.CreateCollider()[3] + B.CreateCollider()[3]) * 0.5f) - Dy;
+                _overlap.X = Dx;
+                _overlap.Y = Dy;
                 // find cNormal
                 _cNormal.X = B.CreateCollider()[0] - A.CreateCollider()[0];
                 _cNormal.Y = B.CreateCollider()[1] - A.CreateCollider()[1];

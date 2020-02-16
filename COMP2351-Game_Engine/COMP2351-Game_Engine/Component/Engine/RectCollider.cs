@@ -56,6 +56,15 @@ namespace COMP2351_Game_Engine
             _origin.Y += dy;
         }
 
+        /// <summary>
+        /// Translate the position of the Collider using a Vector2
+        /// </summary>
+        /// <param name="dPos"></param>
+        public void Translate(Vector2 dPos)
+        {
+            _origin += dPos;
+        }
+
 
         /// <summary>
         /// Method to return the collider centre point, width, and height

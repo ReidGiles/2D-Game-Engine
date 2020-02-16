@@ -19,10 +19,10 @@ namespace COMP2351_Game_Engine.Component.Engine
         private Vector2 _acceleration;
         // Declare a variable type:float, called _inverseMass
         private float _inverseMass;
-        // Declare a variable type:float, called _restitution
-        private float _restitution;
-        // Declare a variable type:float, called _damping
-        private float _damping;
+        // Declare a variable type:Vector2, called _restitution
+        private Vector2 _restitution;
+        // Declare a variable type:Vector2, called _damping
+        private Vector2 _damping;
 
         /// <summary>
         /// Constructor for the PhysicsComponent
@@ -31,10 +31,10 @@ namespace COMP2351_Game_Engine.Component.Engine
         /// <param name="mass"></param>
         /// <param name="restitution"></param>
         /// <param name="damping"></param>
-        public PhysicsComponent(Vector2 position,float mass, float restitution,float damping)
+        public PhysicsComponent(Vector2 position,float mass, Vector2 restitution,Vector2 damping)
         {
             // Set gravity
-            _gravity = new Vector2(0,1f);
+            _gravity = new Vector2(0,2f);
 
             // Set _position
             _position = position;

@@ -13,14 +13,12 @@ namespace COMP2351_Game_Engine
     {
         // args to store the keyboard inputs
         IKeyboardInput _args;
-        // the movement speed of the entity
-        private Vector2 _force;
-        // floor collision flag
-        private bool _floorCollide;
+        // the movement speed of the entity on the x axis
+        private float _xSpeed;
+        // the movement speed of the entity on the y axis
+        private float _ySpeed;
         // in air flag
         private bool _inAir;
-        // on floor status flag
-        private bool _onFloor;
         // right side of entity collision flag
         private bool _rightCollide;
         // left side of entity collision flag
@@ -35,17 +33,16 @@ namespace COMP2351_Game_Engine
         {
             // set args
             _args = new KeyboardHandler();
-            // set _force
-            _force = new Vector2(4,0);
-
+            // set _xSpeed
+            _xSpeed = 4;
+            // set _ySpeed
+            _ySpeed = 17;
             // set facing direction
             _facingDirectionX = 1;
             // set player mind ID
             _mindID = "Player";
             // set collision flags
-            _floorCollide = false;
             _inAir = true;
-            _onFloor = false;
             _rightCollide = false;
             _leftCollide = false;
             // set starting score
@@ -71,19 +68,25 @@ namespace COMP2351_Game_Engine
         {
             // on keyboard event set the keyboard input to args
             _args = args;
+            KeyboardInput();
         }
 
         // Handle Key input
         private void KeyboardInput()
         {
+            //Declare a vector to store the force needed to move
+            Vector2 force = new Vector2(0, 0);
+
             // Player input controlling movement, only active on key down
             foreach (Keys k in _args.GetInputKey())
             {
+
                 // if player presses right arrow or D
                 if (k == Keys.Right || k == Keys.D)
                 {
                     // set facing direction to right(1)
                     _facingDirectionX = 1;
+                    force.X = _xSpeed * _facingDirectionX;
                 }
 
                 // if player presses left arrow or A
@@ -91,6 +94,7 @@ namespace COMP2351_Game_Engine
                 {
                     // set facing direction to left(-1)
                     _facingDirectionX = -1;
+                    force.X = _xSpeed * _facingDirectionX;
                 }
 
                 // if player is not inAir
@@ -100,19 +104,19 @@ namespace COMP2351_Game_Engine
                     if (k == Keys.Up || k == Keys.Space || k == Keys.W)
                     {
                         // set jump value and inAir status to true
-                        _force.Y = 17;
+                        force.Y = -_ySpeed;
                         _inAir = true;
                     }
-                }
-
-                _physicsComponent.ApplyForce(_force);
+                }                
             }
+
+            _physicsComponent.ApplyForce(force);
         }
 
         // TranslateX override for player specific movement
         public override float TranslateX()
         {
-            return Math.Abs(_physicsComponent.GetPosition().X -_location.X)*_facingDirectionX;
+            return (_physicsComponent.GetPosition().X -_location.X);
         }
 
         // TranslateY override for player specific movement
@@ -120,6 +124,11 @@ namespace COMP2351_Game_Engine
         {          
             // apply gravity to the entity
             return _physicsComponent.GetPosition().Y - _location.Y;
+        }
+
+        public override Vector2 Translate()
+        {
+            return _physicsComponent.GetPosition()-_location;
         }
 
         // Handles new collisions args passed by entity
@@ -153,6 +162,10 @@ namespace COMP2351_Game_Engine
             // Reset Collided with and this to null
             _collidedWith = null;
             _collidedThis = null;
+            _overlap.X = 0;
+            _overlap.Y = 0;
+            _cNormal.X = 0;
+            _cNormal.Y = 0;
             
             // return rtnValue
             return rtnValue;
@@ -163,7 +176,6 @@ namespace COMP2351_Game_Engine
             // on collision with Floor change floorCollide flag to true
             if (_collidedWith == "Floor" && _collidedThis == "PlayerB")
             {
-                _floorCollide = true;
                 _inAir = false;
                 _location.Y += -_overlap.Y;
                 _physicsComponent.RemoveOverlapY(-_overlap.Y);
@@ -180,8 +192,6 @@ namespace COMP2351_Game_Engine
 
             // reset floor collision flag statuses
             _inAir = true;
-            _floorCollide = false;
-            _onFloor = false;
 
             // lower players score value when having to respawn, cannot go below 0
             if (_score > 0)
@@ -217,7 +227,7 @@ namespace COMP2351_Game_Engine
             if (_collidedWith == "Ceiling" && _collidedThis == "PlayerT")
             {
                 // set jump value to 0
-                _force.Y = 0;
+                
             }
         }
 
@@ -248,25 +258,10 @@ namespace COMP2351_Game_Engine
         {
             _gameTime = gameTime;
 
-            // if floor Collide flag is true but there is no collision
-            if (_floorCollide && _collidedWith == null)
-            {
-                // set floorCollide to false
-                _floorCollide = false;
-            }
-
-            // If player has jumped
-            if (_force.Y > 0)
-            {
-                // decrement jump
-                _force.Y -= 0.4f;
-            } // if jump is less than 0
-            else if (_force.Y < 0)
-            {
-                // set jump to 0
-                _force.Y = 0;
-            }
-
+            // Update PhysicsComponent
+            _physicsComponent.UpdatePhysics();
+            
+            /*
             // Declare required states
             if (!statesDeclared)
             {
@@ -275,7 +270,7 @@ namespace COMP2351_Game_Engine
             }
 
             // Run state machine
-            StateMachine();
+            StateMachine();*/
         }
     }
 }
