@@ -13,6 +13,8 @@ namespace COMP2351_Game_Engine
     {
         // args to store the keyboard inputs
         IKeyboardInput _args;
+        // the change in location
+        private Vector2 _dLocation;
         // the movement speed of the entity on the x axis
         private float _xSpeed;
         // the movement speed of the entity on the y axis
@@ -33,10 +35,12 @@ namespace COMP2351_Game_Engine
         {
             // set args
             _args = new KeyboardHandler();
+            // set _dLocation
+            _dLocation = new Vector2(0, 0);
             // set _xSpeed
-            _xSpeed = 4;
+            _xSpeed = 6;
             // set _ySpeed
-            _ySpeed = 17;
+            _ySpeed = 25;
             // set facing direction
             _facingDirectionX = 1;
             // set player mind ID
@@ -116,19 +120,25 @@ namespace COMP2351_Game_Engine
         // TranslateX override for player specific movement
         public override float TranslateX()
         {
-            return (_physicsComponent.GetPosition().X -_location.X);
+            _dLocation.X = _physicsComponent.GetPosition().X - _location.X;
+            _location.X += _dLocation.X;
+            return _dLocation.X;
         }
 
         // TranslateY override for player specific movement
         public override float TranslateY()
-        {          
+        {
             // apply gravity to the entity
-            return _physicsComponent.GetPosition().Y - _location.Y;
+            _dLocation.Y = _physicsComponent.GetPosition().Y - _location.Y;
+            _location.Y += _dLocation.Y;
+            return _dLocation.Y;
         }
 
         public override Vector2 Translate()
         {
-            return _physicsComponent.GetPosition()-_location;
+            _dLocation = _physicsComponent.GetPosition() - _location;
+            _location += _dLocation;
+            return _dLocation;
         }
 
         // Handles new collisions args passed by entity
@@ -177,7 +187,7 @@ namespace COMP2351_Game_Engine
             if (_collidedWith == "Floor" && _collidedThis == "PlayerB")
             {
                 _inAir = false;
-                _location.Y += -_overlap.Y;
+                _location.Y -= _overlap.Y;
                 _physicsComponent.RemoveOverlapY(-_overlap.Y);
             }
         }
@@ -260,8 +270,7 @@ namespace COMP2351_Game_Engine
 
             // Update PhysicsComponent
             _physicsComponent.UpdatePhysics();
-            
-            /*
+
             // Declare required states
             if (!statesDeclared)
             {
@@ -270,7 +279,7 @@ namespace COMP2351_Game_Engine
             }
 
             // Run state machine
-            StateMachine();*/
+            StateMachine();
         }
     }
 }
