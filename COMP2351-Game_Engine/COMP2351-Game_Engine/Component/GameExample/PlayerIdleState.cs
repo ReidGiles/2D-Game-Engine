@@ -71,7 +71,7 @@ namespace COMP2351_Game_Engine
         {
             if (_currentTexture != texture)
             {
-                _animator.SetTexture(entity, texture);
+                //_animator.SetTexture(entity, texture);
             }
             _currentTexture = texture;
         }

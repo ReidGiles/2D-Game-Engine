@@ -22,6 +22,23 @@ namespace COMP2351_Game_Engine
         private Vector3 cameraPos;
         // content manager
         private ContentManager _content;
+        // Game time
+        private GameTime _gameTime;
+        // Render time for animation
+        private float _renderTime;
+        // Rows inside _textureAtlas
+        private int _rows;
+        // Columns inside _textureAtlas
+        private int _columns;
+        // Current animation frame
+        private int _currentFrame;
+        // Total number of animation frames
+        private int _totalFrames;
+        // Animation frame time
+        private float _frameTime;
+
+        // string holding current texture
+        private string _currentTexture = "Player_Run_1";
 
         /// <summary>
         /// Constructor for RenderManager
@@ -44,6 +61,66 @@ namespace COMP2351_Game_Engine
         }
 
         /// <summary>
+        /// Animates an entity using a custom texture atlas and frame time
+        /// </summary>
+        /// <param name="pEntityName"></param>
+        /// <param name="pTextureAtlas"></param>
+        /// <param name="pFrameTime"></param>
+        public void Animate(string pEntityName, string pTextureAtlas, int pRows, int pColumns, float pFrameTime)
+        {
+            SetupTextureAtlas(pRows, pColumns, pFrameTime);
+            // Calculate elapsed game time for animations
+            _renderTime += (float)_gameTime.ElapsedGameTime.TotalSeconds;
+
+            _currentFrame++;
+            if (_currentFrame == _totalFrames)
+            {
+                _currentFrame = 0;
+            }
+
+
+
+
+            if (_renderTime > pFrameTime)
+            {
+                SetTexture(pEntityName, pTextureAtlas);
+                Console.WriteLine("TexChange");
+                _renderTime = 0f;
+            }
+        }
+
+        private void SetupTextureAtlas(int pRows, int pColumns, float pFrameTime)
+        {
+            // SET _rows
+            _rows = pRows;
+            // SET _columns
+            _columns = pColumns;
+            // SET _totalFrames
+            _totalFrames = pRows * pColumns;
+            // SET _frameTime
+            _frameTime = pFrameTime;
+        }
+
+        /// <summary>
+        /// State behaviour logic
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="texture"></param>
+        private string Behavior()
+        {
+            if (_currentTexture == "Player_Run_1")
+            {
+                _currentTexture = "Player_Run_2";
+                return "Player_Run_2";
+            }
+            else
+            {
+                _currentTexture = "Player_Run_1";
+                return "Player_Run_1";
+            }
+        }
+
+        /// <summary>
         /// Set the texture of an entity
         /// </summary>
         /// <param name="pUName"></param>
@@ -53,7 +130,7 @@ namespace COMP2351_Game_Engine
             // Retrieve entity by unique name
             IEntity e = _sceneManager.GetEntity(pUName);         
             // Set new texture for entity
-            e.SetTexture(_content.Load<Texture2D>(pTextureName));
+            e.SetTexture(_content.Load<Texture2D>(pTextureName), _rows, _columns, _currentFrame);
         }
 
         /// <summary>
@@ -61,6 +138,9 @@ namespace COMP2351_Game_Engine
         /// </summary>
         public void Update(GameTime gameTime)
         {
+            // SET _gameTime for use by Animate()
+            _gameTime = gameTime;
+
             // Set graphics background colour
             _graphicsDeviceManager.GraphicsDevice.Clear(Color.Purple);
 
