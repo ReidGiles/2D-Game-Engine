@@ -37,8 +37,7 @@ namespace COMP2351_Game_Engine
         // Animation frame time
         private float _frameTime;
 
-        // string holding current texture
-        private string _currentTexture = "Player_Run_1";
+        private float _fixedTimeStep;
 
         /// <summary>
         /// Constructor for RenderManager
@@ -58,6 +57,8 @@ namespace COMP2351_Game_Engine
             cameraPos = new Vector3(ScreenWidth / 2, 0, 0);
             // Set content manager
             _content = pContentManager;
+
+            _fixedTimeStep = 0166667;
         }
 
         /// <summary>
@@ -73,22 +74,35 @@ namespace COMP2351_Game_Engine
             if (_gameTime != null)
             {
                 _renderTime += (float)_gameTime.ElapsedGameTime.TotalSeconds;
-            }           
-
-            _currentFrame++;
-            if (_currentFrame == _totalFrames)
-            {
-                _currentFrame = 0;
+                Console.WriteLine(_renderTime);
             }
 
+            // Move to next frame
+            _currentFrame++;
+
+
+            // If current frame is last frame
+            if (_currentFrame == _totalFrames)
+            {
+                // Restart animation from first frame
+                _currentFrame = 0;
+            }
+            // FOR loop, remove frame time from render time and count how many cycles it takes for frame time to become less than render time
+            // IF the result is 0, increment one frame, otherwise increment more frames
+            // remember to subtract 1 from for loop variable
             if (_renderTime > pFrameTime)
             {
                 SetTexture(pEntityName, pTextureAtlas);
-                Console.WriteLine("TexChange");
                 _renderTime = 0f;
             }
         }
 
+        /// <summary>
+        /// Sets variables relevant to texture atlas animation
+        /// </summary>
+        /// <param name="pRows"></param>
+        /// <param name="pColumns"></param>
+        /// <param name="pFrameTime"></param>
         private void SetupTextureAtlas(int pRows, int pColumns, float pFrameTime)
         {
             // SET _rows
@@ -99,25 +113,6 @@ namespace COMP2351_Game_Engine
             _totalFrames = pRows * pColumns;
             // SET _frameTime
             _frameTime = pFrameTime;
-        }
-
-        /// <summary>
-        /// State behaviour logic
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="texture"></param>
-        private string Behavior()
-        {
-            if (_currentTexture == "Player_Run_1")
-            {
-                _currentTexture = "Player_Run_2";
-                return "Player_Run_2";
-            }
-            else
-            {
-                _currentTexture = "Player_Run_1";
-                return "Player_Run_1";
-            }
         }
 
         /// <summary>

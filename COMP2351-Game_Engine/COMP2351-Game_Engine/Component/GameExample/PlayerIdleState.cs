@@ -30,7 +30,7 @@ namespace COMP2351_Game_Engine
             _audioPlayer = pAudioPlayer;
             _args = pArgs;
             // INSTANTIATE _frameTime
-            _frameTime = 0.09f;
+            _frameTime = 0.009f;
         }
 
         /// <summary>
