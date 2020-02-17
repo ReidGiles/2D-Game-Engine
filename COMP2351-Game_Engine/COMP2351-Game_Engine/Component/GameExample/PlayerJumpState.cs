@@ -14,8 +14,8 @@ namespace COMP2351_Game_Engine
         private IAnimator _animator;
         // args to store the keyboard inputs
         IKeyboardInput _args;
-        // string holding current texture
-        private string _currentTexture;
+        // Animation frame time
+        private float _frameTime;
 
         private IAudioPlayer _audioPlayer;
 
@@ -29,19 +29,20 @@ namespace COMP2351_Game_Engine
             _animator = pAnimator;
             _audioPlayer = pAudioPlayer;
             _args = pArgs;
+            // INSTANTIATE _frameTime
+            _frameTime = 0.009f;
         }
         /// <summary>
         /// Updates the state
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            Behavior("Player", "Player_Jump");
+            Behavior();
         }
         public string Trigger()
         {
             if ( !( _args.GetInputKey().Contains(Keys.Up) ) )
             {
-                _currentTexture = null;
                 return "Idle";
             }
             return null;
@@ -51,14 +52,10 @@ namespace COMP2351_Game_Engine
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="texture"></param>
-        private void Behavior(string entity, string texture)
+        private void Behavior()
         {
-            if (_currentTexture != texture)
-            {
-                _audioPlayer.PlaySound("Jump");
-                _animator.SetTexture(entity, texture);
-            }            
-            _currentTexture = texture;
+            _animator.Animate("Player", "SmileyWalkAtlas", 4, 4, _frameTime);
+            _audioPlayer.PlaySound("Jump");
         }
     }
 }

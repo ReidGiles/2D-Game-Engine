@@ -70,16 +70,16 @@ namespace COMP2351_Game_Engine
         {
             SetupTextureAtlas(pRows, pColumns, pFrameTime);
             // Calculate elapsed game time for animations
-            _renderTime += (float)_gameTime.ElapsedGameTime.TotalSeconds;
+            if (_gameTime != null)
+            {
+                _renderTime += (float)_gameTime.ElapsedGameTime.TotalSeconds;
+            }           
 
             _currentFrame++;
             if (_currentFrame == _totalFrames)
             {
                 _currentFrame = 0;
             }
-
-
-
 
             if (_renderTime > pFrameTime)
             {

@@ -13,8 +13,8 @@ namespace COMP2351_Game_Engine
         private IAnimator _animator;
         // args to store the keyboard inputs
         IKeyboardInput _args;
-        // string holding current texture
-        private string _currentTexture;
+        // Animation frame time
+        private float _frameTime;
 
         private IAudioPlayer _audioPlayer;
 
@@ -29,6 +29,8 @@ namespace COMP2351_Game_Engine
             _animator = pAnimator;
             _audioPlayer = pAudioPlayer;
             _args = pArgs;
+            // INSTANTIATE _frameTime
+            _frameTime = 0.09f;
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace COMP2351_Game_Engine
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
-            Behavior("Player", "Player_Idle");
+            Behavior();
         }
 
         /// <summary>
@@ -51,12 +53,10 @@ namespace COMP2351_Game_Engine
             {
                 if (k == Keys.Up || k == Keys.Space || k == Keys.W)
                 {
-                    _currentTexture = null;
                     return "Jump";
                 }
                 else if (k == Keys.Left || k == Keys.Right || k == Keys.A|| k == Keys.D)
                 {
-                    _currentTexture = null;
                     return "Run";
                 }
             }
@@ -67,13 +67,9 @@ namespace COMP2351_Game_Engine
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="texture"></param>
-        private void Behavior(string entity, string texture)
+        private void Behavior()
         {
-            if (_currentTexture != texture)
-            {
-                //_animator.SetTexture(entity, texture);
-            }
-            _currentTexture = texture;
+            _animator.Animate("Player", "SmileyWalkAtlas", 4, 4, _frameTime);
         }
     }
 }

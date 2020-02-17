@@ -24,6 +24,7 @@ namespace COMP2351_Game_Engine
         private float _renderTime;
         private float _soundTime;
 
+        // Animation frame time
         private float _frameTime;
 
         /// <summary>
@@ -37,8 +38,8 @@ namespace COMP2351_Game_Engine
             _audioPlayer = pAudioPlayer;
             // INSTANTIATE _args
             _args = pArgs;
-
-            _frameTime = 0.09f;
+            // INSTANTIATE _frameTime
+            _frameTime = 0.009f;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace COMP2351_Game_Engine
 
             _gameTime = gameTime;
 
-            _animator.Animate("Player", "SmileyWalkAtlas", 4, 4, 0.009f);
+            _animator.Animate("Player", "SmileyWalkAtlas", 4, 4, _frameTime);
 
             // Calculate elapsed game time for audio
             _soundTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
