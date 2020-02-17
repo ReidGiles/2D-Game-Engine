@@ -12,8 +12,6 @@ namespace COMP2351_Game_Engine
     {
         // Entity texture:
         protected Texture2D texture;
-        // Entity textureAtlas:
-        protected Texture2D _textureAtlas;
         // Entity location:
         protected Vector2 location;
         // Entity texture rotation
@@ -38,16 +36,6 @@ namespace COMP2351_Game_Engine
         protected bool _killSelf = false;
         // bool to flag for horizontal inversion of a texture
         private bool _invertedTexture = false;
-        // bool to flag existence of texture atlas
-        private bool _hasAtlas = false;
-
-        private int _width;
-        private int _height;
-        private int _row;
-        private int _column;
-
-        private Rectangle _sourceRectangle;
-        private Rectangle _destinationRectangle;
 
         /// <summary>
         /// Called by scene manager, updates entities on the scene.
@@ -74,29 +62,6 @@ namespace COMP2351_Game_Engine
             
             rotation = 0;
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
-        }
-
-        /// <summary>
-        /// Sets entity texture atlas
-        /// </summary>
-        /// <param name="pTextureAtlas"></param>
-        /// <param name="pColumns"></param>
-        /// <param name="pRows"></param>
-        /// <param name="pCurrentFrame"></param>
-        public void SetTexture(Texture2D pTextureAtlas, int pRows, int pColumns, int pCurrentFrame)
-        {
-            _width = pTextureAtlas.Width / pColumns;
-            _height = pTextureAtlas.Height / pRows;
-            _row = (int)((float)pCurrentFrame / (float)pColumns);
-            _column = pCurrentFrame % pColumns;
-
-            _textureAtlas = pTextureAtlas;
-
-            _sourceRectangle = new Rectangle(_width * _column, _height * _row, _width, _height);
-            _destinationRectangle = new Rectangle((int)location.X, (int)location.Y, _width, _height);
-
-            // SET _hasAtlas to true
-            _hasAtlas = true;
         }
 
         protected void InvertTexture(float pfacingDirection)
@@ -240,11 +205,7 @@ namespace COMP2351_Game_Engine
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (_hasAtlas)
-            {
-                spriteBatch.Draw(_textureAtlas, _destinationRectangle, _sourceRectangle, Color.White);
-            }
-            else spriteBatch.Draw(texture, location+origin, null, Color.AntiqueWhite, rotation, origin,1, textureEffect, 0);
+            spriteBatch.Draw(texture, location+origin, null, Color.AntiqueWhite, rotation, origin,1, textureEffect, 0);
         }
 
         /// <summary>
