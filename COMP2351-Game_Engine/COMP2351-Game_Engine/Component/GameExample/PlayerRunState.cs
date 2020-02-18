@@ -21,7 +21,6 @@ namespace COMP2351_Game_Engine
         // DECLARE an IAudioPlayer, call it '_audioPlayer'
         private IAudioPlayer _audioPlayer;
 
-        private float _renderTime;
         private float _soundTime;
 
         // Animation frame time
@@ -83,25 +82,6 @@ namespace COMP2351_Game_Engine
                 }
             }
             return null;
-        }
-
-        /// <summary>
-        /// State behaviour logic
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="texture"></param>
-        private string Behavior()
-        {
-            if (_currentTexture == "Player_Run_1")
-            {
-                _currentTexture = "Player_Run_2";
-                return "Player_Run_2";
-            }
-            else
-            {
-                _currentTexture = "Player_Run_1";
-                return "Player_Run_1";
-            }            
         }
     }
 }

@@ -37,8 +37,6 @@ namespace COMP2351_Game_Engine
         // Animation frame time
         private float _frameTime;
 
-        private float _fixedTimeStep;
-
         /// <summary>
         /// Constructor for RenderManager
         /// </summary>
@@ -57,8 +55,6 @@ namespace COMP2351_Game_Engine
             cameraPos = new Vector3(ScreenWidth / 2, 0, 0);
             // Set content manager
             _content = pContentManager;
-
-            _fixedTimeStep = 0166667;
         }
 
         /// <summary>
@@ -74,7 +70,7 @@ namespace COMP2351_Game_Engine
             if (_gameTime != null)
             {
                 _renderTime += (float)_gameTime.ElapsedGameTime.TotalSeconds;
-                Console.WriteLine(_renderTime);
+                //Console.WriteLine(_renderTime);
             }
 
             // Move to next frame
@@ -87,13 +83,28 @@ namespace COMP2351_Game_Engine
                 // Restart animation from first frame
                 _currentFrame = 0;
             }
-            // FOR loop, remove frame time from render time and count how many cycles it takes for frame time to become less than render time
-            // IF the result is 0, increment one frame, otherwise increment more frames
-            // remember to subtract 1 from for loop variable
+            /*FOR loop, remove frame time from render time and count how many cycles it takes for frame time to become less than render time
+              IF the result is 0, increment one frame, otherwise increment more frames*/
+
             if (_renderTime > pFrameTime)
             {
-                SetTexture(pEntityName, pTextureAtlas);
-                _renderTime = 0f;
+                for (int i = 0; i < 10; i++)
+                {
+                    // Subtract frame time from render time
+                    float a = _renderTime - pFrameTime;
+                    // IF frame time < render time, increment frame by i
+                    if (a < _renderTime)
+                    {
+                        // Move to next frame
+                        _currentFrame += i;
+                        // Update texture
+                        SetTexture(pEntityName, pTextureAtlas);
+                        // Reset render time
+                        _renderTime = 0f;
+                        // Break loop
+                        break;
+                    }
+                }               
             }
         }
 
@@ -120,12 +131,25 @@ namespace COMP2351_Game_Engine
         /// </summary>
         /// <param name="pUName"></param>
         /// <param name="pTexture"></param>
-        public void SetTexture(string pUName, string pTextureName)
+        private void SetTexture(string pUName, string pTextureName)
         {
             // Retrieve entity by unique name
             IEntity e = _sceneManager.GetEntity(pUName);         
             // Set new texture for entity
             e.SetTexture(_content.Load<Texture2D>(pTextureName), _rows, _columns, _currentFrame);
+        }
+
+        /// <summary>
+        /// Set the texture of an entity
+        /// </summary>
+        /// <param name="pUName"></param>
+        /// <param name="pTexture"></param>
+        private void SetTexture(string pUName, string pTextureName, int pCurrentFrame)
+        {
+            // Retrieve entity by unique name
+            IEntity e = _sceneManager.GetEntity(pUName);
+            // Set new texture for entity
+            e.SetTexture(_content.Load<Texture2D>(pTextureName), _rows, _columns, pCurrentFrame);
         }
 
         /// <summary>
