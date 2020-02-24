@@ -68,10 +68,7 @@ namespace COMP2351_Game_Engine
             SetupTextureAtlas(pRows, pColumns, pFrameTime);
             // Calculate elapsed game time for animations
             if (_gameTime != null)
-            {
                 _renderTime += (float)_gameTime.ElapsedGameTime.TotalSeconds;
-                //Console.WriteLine(_renderTime);
-            }
 
             // Move to next frame
             _currentFrame++;
@@ -79,10 +76,9 @@ namespace COMP2351_Game_Engine
 
             // If current frame is last frame
             if (_currentFrame == _totalFrames)
-            {
                 // Restart animation from first frame
                 _currentFrame = 0;
-            }
+
             /*FOR loop, remove frame time from render time and count how many cycles it takes for frame time to become less than render time
               IF the result is 0, increment one frame, otherwise increment more frames*/
 
