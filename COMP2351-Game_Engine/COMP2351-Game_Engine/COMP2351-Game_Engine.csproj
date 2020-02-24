@@ -92,6 +92,7 @@
     <Compile Include="Interface\Engine\IMind.cs" />
     <Compile Include="Interface\Engine\IMouseInput.cs" />
     <Compile Include="Interface\Engine\IMouseListener.cs" />
+    <Compile Include="Interface\Engine\IPhysicsComponent.cs" />
     <Compile Include="Interface\Engine\IState.cs" />
     <Compile Include="Interface\GameExample\IPlayer.cs" />
     <Compile Include="Interface\GameExample\IRelicHunterEntity.cs" />

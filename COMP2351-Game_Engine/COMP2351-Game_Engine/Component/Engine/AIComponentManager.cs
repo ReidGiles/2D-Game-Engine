@@ -77,7 +77,7 @@ namespace COMP2351_Game_Engine
             //update each mind in the mind list
             foreach (IMind m in _mindList)
             {
-                ( (IUpdatable)m).Update(gameTime);
+                ((IUpdatable)m).Update(gameTime);
             }
         }
     }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using COMP2351_Game_Engine.Component.Engine;
+using COMP2351_Game_Engine.Interface.Engine;
 
 namespace COMP2351_Game_Engine
 {
     class Player : RelicHunterEntity, IPlayer, ICollisionListener
     {
-        PhysicsComponent _physicsComponent;
+        IPhysicsComponent _physicsComponent;
 
         public Player()
         {
