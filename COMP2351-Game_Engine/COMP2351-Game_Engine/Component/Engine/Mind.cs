@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using COMP2351_Game_Engine.Component.Engine;
+using COMP2351_Game_Engine.Interface.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -34,7 +35,7 @@ namespace COMP2351_Game_Engine
         // cNormal of collided entities
         protected Vector2 _cNormal;
         // Physics component
-        protected PhysicsComponent _physicsComponent;
+        protected IPhysicsComponent _physicsComponent;
         // dictionary storing state machine states
         protected Dictionary<string, IState> _stateDictionary = new Dictionary<string, IState>();
         // current state
@@ -123,7 +124,7 @@ namespace COMP2351_Game_Engine
             _colliders = pColliders;
         }
 
-        public virtual void SetPhysicsComponent(PhysicsComponent pPhysicsComponent)
+        public virtual void SetPhysicsComponent(IPhysicsComponent pPhysicsComponent)
         {
             _physicsComponent = pPhysicsComponent;
         }

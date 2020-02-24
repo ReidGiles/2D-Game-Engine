@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using COMP2351_Game_Engine.Interface.Engine;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace COMP2351_Game_Engine.Component.Engine
 {
-    class PhysicsComponent
+    class PhysicsComponent : IPhysicsComponent
     {
         // Declare a variable type:Vector2, called _gravity
         private Vector2 _gravity;
