@@ -19,11 +19,13 @@ namespace COMP2351_Game_Engine
         // Reference to the audio manager
         private IAudioPlayer _audioManager;
 
+        private ISceneManager _sceneManager;
+
         /// <summary>
         /// //constructor for the AI component manager
         /// </summary>
         /// <param name="pInputManager"></param>
-        public AIComponentManager(IInputManager pInputManager, IAnimator pAnimator, IAudioPlayer pAudioManager)
+        public AIComponentManager(IInputManager pInputManager, IAnimator pAnimator, IAudioPlayer pAudioManager, ISceneManager pSceneManager)
         {
             //initialise _mindList
             _mindList = new List<IMind>();
@@ -33,6 +35,8 @@ namespace COMP2351_Game_Engine
             _animator = pAnimator;
             // Initialise _audioManager
             _audioManager = pAudioManager;
+
+            _sceneManager = pSceneManager;
         }
 
         /// <summary>
@@ -74,10 +78,15 @@ namespace COMP2351_Game_Engine
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            //update each mind in the mind list
-            foreach (IMind m in _mindList)
+            foreach (IEntity e in _sceneManager.GetEntity())
             {
-                ( (IUpdatable)m).Update(gameTime);
+                if (e.KillSelf())
+                {
+                }
+                else
+                {
+                    ((IUpdatable)e.GetMind()).Update(gameTime);
+                }
             }
         }
     }

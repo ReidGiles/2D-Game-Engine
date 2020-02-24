@@ -137,6 +137,7 @@ namespace COMP2351_Game_Engine
             IEntity e = _sceneManager.GetEntity(pUName);         
             // Set new texture for entity
             e.SetTexture(_content.Load<Texture2D>(pTextureName), _rows, _columns, _currentFrame);
+            
         }
 
         /// <summary>

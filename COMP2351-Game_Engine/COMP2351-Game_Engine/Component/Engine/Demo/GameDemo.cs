@@ -310,10 +310,10 @@ namespace COMP2351_Game_Engine
         public void Update()
         {
             // Respawn player on death
-            if (sceneManager.GetEntity("Player") == null)
+            /*if (sceneManager.GetEntity("Player") == null)
             {
                 sceneManager.Spawn(entityManager.RequestInstance("Player"), 0, 300);
-            }
+            }*/
         }
     }
 }
