@@ -12,8 +12,6 @@ namespace COMP2351_Game_Engine
 {
     class Player : RelicHunterEntity, IPlayer, ICollisionListener
     {
-        IPhysicsComponent _physicsComponent;
-
         public Player()
         {
         }

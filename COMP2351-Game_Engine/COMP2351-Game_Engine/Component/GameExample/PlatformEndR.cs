@@ -52,13 +52,9 @@ namespace COMP2351_Game_Engine
 
             // // Set Collider for the floor
             ColliderOrigin.X = location.X + 0.5f * texture.Width;
-            ColliderOrigin.Y = location.Y + 0.25f * texture.Height;
-            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height/2, "Floor"));
+            ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
+            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Floor"));
 
-            // SET bottom collider to act as a ceiling to stop player jumping through
-            ColliderOrigin.X = location.X + 0.5f * texture.Width;
-            ColliderOrigin.Y = location.Y + 0.75f * texture.Height;
-            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height/2, "Ceiling"));
 
             // Add the collider list to the mind
             _mind.SetCollider(_colliders.Cast<ICreateCollider>().ToList());

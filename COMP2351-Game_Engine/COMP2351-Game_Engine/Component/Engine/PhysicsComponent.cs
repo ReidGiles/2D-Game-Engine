@@ -84,6 +84,11 @@ namespace COMP2351_Game_Engine.Component.Engine
             return _position;
         }
 
+        public void ResetPosition(Vector2 pPos)
+        {
+            _position = pPos;
+        }
+
         public void RemoveOverlapY(float pOverlapY)
         {
             _position.Y += pOverlapY;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using COMP2351_Game_Engine.Interface.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -32,6 +33,8 @@ namespace COMP2351_Game_Engine
         protected List<ICollider> _colliders;
         // Entity mind:
         protected IMind _mind;
+        // Entity Physics Component
+        protected IPhysicsComponent _physicsComponent;
         // bool to flag if the enitity has a collider
         protected bool hasCollider = false;
         // bool to flag for the entity to be terminated
@@ -125,6 +128,9 @@ namespace COMP2351_Game_Engine
             location.Y = pY;
             // Set entity collider
             SetCollider();
+            if (_physicsComponent != null)
+                _physicsComponent.ResetPosition(location);
+    
         }
 
         /// <summary>

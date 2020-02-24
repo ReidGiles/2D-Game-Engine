@@ -127,7 +127,7 @@ namespace COMP2351_Game_Engine
             // Update all entities inside the scene graph
             foreach (IEntity e in _sceneGraph.GetEntity())
             {
-                ( (IUpdatable)e).Update(gameTime);
+                ((IUpdatable)e).Update(gameTime);
 
                 if (e.KillSelf())
                 {
