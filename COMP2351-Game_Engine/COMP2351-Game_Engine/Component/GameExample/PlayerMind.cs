@@ -21,6 +21,8 @@ namespace COMP2351_Game_Engine
         private float _ySpeed;
         // in air flag
         private bool _inAir;
+        // on the floor
+        private bool _onFloor;
         // right side of entity collision flag
         private bool _rightCollide;
         // left side of entity collision flag
@@ -47,6 +49,7 @@ namespace COMP2351_Game_Engine
             _mindID = "Player";
             // set collision flags
             _inAir = true;
+            _onFloor = false;
             _rightCollide = false;
             _leftCollide = false;
             // set starting score
@@ -184,12 +187,17 @@ namespace COMP2351_Game_Engine
         private void FloorCollision()
         {
             // on collision with Floor change floorCollide flag to true
-            if (_collidedWith == "Floor" && _collidedThis == "PlayerB")
+            if (!_onFloor)
             {
-                _inAir = false;
-                _location.Y -= _overlap.Y;
-                _physicsComponent.RemoveOverlapY(-_overlap.Y);
+                if (_collidedWith == "Floor" && _collidedThis == "PlayerB")
+                {
+                    _inAir = false;
+                    _location.Y -= _overlap.Y;
+                    _physicsComponent.RemoveOverlapY(-_overlap.Y);
+                    _onFloor = true;
+                }
             }
+            
         }
 
         /// <summary>
@@ -280,6 +288,7 @@ namespace COMP2351_Game_Engine
 
             // Run state machine
             StateMachine();
+            _onFloor = false;
         }
     }
 }
