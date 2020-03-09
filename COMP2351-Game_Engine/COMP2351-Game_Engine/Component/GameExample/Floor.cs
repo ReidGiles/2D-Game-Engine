@@ -67,8 +67,6 @@ namespace COMP2351_Game_Engine
             {
                 //tell the mind the location of the player
                 _mind.UpdateLocation(location);
-                //tell the mind the value fo texture
-                _mind.UpdateTexture(texture);
                 //updates the position of the player
                 float DX = _mind.TranslateX();
                 float DY = _mind.TranslateY();

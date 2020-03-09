@@ -13,7 +13,7 @@ namespace COMP2351_Game_Engine
     interface IMind
     {
         void UpdateLocation(Vector2 pLocation);
-        float UpdateTexture(Texture2D pTexture);
+        float GetFacingDirection();
         void SetCollider(List<ICreateCollider> pColliders);
         void SetPhysicsComponent(IPhysicsComponent pPhysicsComponent);
         float TranslateX();

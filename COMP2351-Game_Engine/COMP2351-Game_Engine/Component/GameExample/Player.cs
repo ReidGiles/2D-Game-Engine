@@ -92,14 +92,13 @@ namespace COMP2351_Game_Engine
                 //tell the mind the location of the player
                 _mind.UpdateLocation(location);
                 //tell the mind the value for texture and check to see if texture needs to be inverted
-                InvertTexture(_mind.UpdateTexture(texture));
+                InvertTexture(_mind.GetFacingDirection());
                 //updates the position of the player
                 //float DX = _mind.TranslateX();
                 //float DY = _mind.TranslateY();
                 //Translate(DX, DY);
                 // Change in Entity location
-                Vector2 dlocation;
-                dlocation = _mind.Translate();
+                Vector2 dlocation = _mind.Translate();
                 Translate(dlocation);
                 // updates the position of the colliders to follow the player
                 foreach (ICollider e in _colliders)

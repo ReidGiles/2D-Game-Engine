@@ -95,6 +95,18 @@ namespace COMP2351_Game_Engine
 
             _textureAtlas = pTextureAtlas;
 
+            if (_invertedTexture)
+            {
+                textureEffect = SpriteEffects.FlipHorizontally;
+            }
+            else
+            {
+                textureEffect = SpriteEffects.None;
+            }
+
+            rotation = 0;
+            origin = new Vector2(0, 0);
+
             _sourceRectangle = new Rectangle(_width * _column, _height * _row, _width, _height);
             _destinationRectangle = new Rectangle((int)location.X, (int)location.Y, _width, _height);
 
@@ -112,7 +124,6 @@ namespace COMP2351_Game_Engine
             
             if(pfacingDirection == 1)
             {
-                
                 _invertedTexture = false;
             }
         }
@@ -248,7 +259,7 @@ namespace COMP2351_Game_Engine
         {
             if (_hasAtlas)
             {
-                spriteBatch.Draw(_textureAtlas, _destinationRectangle, _sourceRectangle, Color.White);
+                spriteBatch.Draw(_textureAtlas, _destinationRectangle, _sourceRectangle, Color.White,rotation,origin,textureEffect,0);
             }
             else spriteBatch.Draw(texture, location+origin, null, Color.AntiqueWhite, rotation, origin,1, textureEffect, 0);
         }

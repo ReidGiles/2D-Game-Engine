@@ -103,14 +103,11 @@ namespace COMP2351_Game_Engine
         }
 
         /// <summary>
-        /// Updates entity texture
+        /// Returns the Facing Direction
         /// </summary>
         /// <param name="pTexture"></param>
-        public float UpdateTexture(Texture2D pTexture)
+        public float GetFacingDirection()
         {
-            // set texture
-            _texture = pTexture;
-
             return _facingDirectionX;
         }
 
