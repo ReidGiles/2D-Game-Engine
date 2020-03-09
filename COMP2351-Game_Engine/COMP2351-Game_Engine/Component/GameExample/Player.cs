@@ -22,7 +22,7 @@ namespace COMP2351_Game_Engine
         public override void Initialise()
         {
             // Set initial entity mind:
-            _mind = _aiComponentManager.RequestMind<PlayerMind>();
+            SetMind(_aiComponentManager.RequestMind<PlayerMind>());
 
             _physicsComponent = new PhysicsComponent(location,1,new Vector2(0f, 0.9f),new Vector2(0f,0.9f));
             _mind.SetPhysicsComponent(_physicsComponent);
@@ -86,7 +86,7 @@ namespace COMP2351_Game_Engine
         public override void Update(GameTime gameTime)
         {
             // if there are no colliders then set them using SetCollider method
-            
+            /*
             if (_mind != null)
             {
                 //tell the mind the location of the player
@@ -100,13 +100,7 @@ namespace COMP2351_Game_Engine
                 // Change in Entity location
                 Vector2 dlocation = _mind.Translate();
                 Translate(dlocation);
-                // updates the position of the colliders to follow the player
-                foreach (ICollider e in _colliders)
-                {
-                    e.Translate(dlocation);
-                }
-
-            }
+            }*/
             //else Console.WriteLine("Error: Mind is null");
             /*Console.WriteLine("Top"+((ICreateCollider)_collider).CreateCollider()[0]);
             Console.WriteLine("Bottom" + ((ICreateCollider)_collider).CreateCollider()[1]);

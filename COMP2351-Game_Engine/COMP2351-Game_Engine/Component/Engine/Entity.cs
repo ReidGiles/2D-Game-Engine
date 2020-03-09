@@ -186,6 +186,7 @@ namespace COMP2351_Game_Engine
         public virtual void SetMind(IMind pMind)
         {
             _mind = pMind;
+            _mind.SetDelegates(this.Translate, this.InvertTexture, this.GetLocation);
         }
 
         /// <summary>
@@ -224,6 +225,12 @@ namespace COMP2351_Game_Engine
         {
             location.X += dX;
             location.Y += dY;
+
+            // updates the position of the colliders to follow the player
+            foreach (ICollider e in _colliders)
+            {
+                e.Translate(dX,dY);
+            }
         }
 
         /// <summary>
@@ -233,6 +240,12 @@ namespace COMP2351_Game_Engine
         public virtual void Translate(Vector2 dPos)
         {
             location += dPos;
+
+            // updates the position of the colliders to follow the player
+            foreach (ICollider e in _colliders)
+            {
+                e.Translate(dPos);
+            }
         }
 
         /// <summary>

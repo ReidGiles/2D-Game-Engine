@@ -44,6 +44,7 @@
     <Compile Include="Component\Engine\AIComponentManager.cs" />
     <Compile Include="Component\Engine\CollisionHandler.cs" />
     <Compile Include="Component\Engine\CollisionManager.cs" />
+    <Compile Include="Component\Engine\Delegates.cs" />
     <Compile Include="Component\Engine\Demo\GameDemo.cs" />
     <Compile Include="Component\Engine\Demo\SoundManager.cs" />
     <Compile Include="Component\Engine\Entity.cs" />

@@ -40,9 +40,9 @@ namespace COMP2351_Game_Engine
             // set _dLocation
             _dLocation = new Vector2(0, 0);
             // set _xSpeed
-            _xSpeed = 6;
+            _xSpeed = 7;
             // set _ySpeed
-            _ySpeed = 25;
+            _ySpeed = 35;
             // set facing direction
             _facingDirectionX = 1;
             // set player mind ID
@@ -116,7 +116,9 @@ namespace COMP2351_Game_Engine
                     }
                 }                
             }
-
+            // update facing direction in entity
+            eInvertTexture(_facingDirectionX);
+            // apply force to the physics component to move entity
             _physicsComponent.ApplyForce(force);
         }
 
@@ -276,8 +278,12 @@ namespace COMP2351_Game_Engine
         {
             _gameTime = gameTime;
 
+            // update location
+            UpdateLocation(eGetLocation());
             // Update PhysicsComponent
             _physicsComponent.UpdatePhysics();
+
+            eTranslate(Translate());
 
             // Declare required states
             if (!statesDeclared)

@@ -7,6 +7,7 @@ using COMP2351_Game_Engine.Component.Engine;
 using COMP2351_Game_Engine.Interface.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using static COMP2351_Game_Engine.Component.Engine.Delegates;
 
 namespace COMP2351_Game_Engine
 {
@@ -46,6 +47,12 @@ namespace COMP2351_Game_Engine
         protected IAudioPlayer _audioPlayer;
         // Game Time
         protected GameTime _gameTime;
+        // delegates for entity
+        public PassVector2 eTranslate;
+
+        public PassFloat eInvertTexture;
+
+        public GetVector2 eGetLocation;
 
         public void SetAnimator(IAnimator pAnimator)
         {
@@ -55,6 +62,13 @@ namespace COMP2351_Game_Engine
         public void SetAudioPlayer(IAudioPlayer pAudioPlayer)
         {
             _audioPlayer = pAudioPlayer;
+        }
+
+        public void SetDelegates(PassVector2 pETranslate,PassFloat pEInvertTexture, GetVector2 pEGetLocation)
+        {
+            eTranslate = pETranslate;
+            eInvertTexture = pEInvertTexture;
+            eGetLocation = pEGetLocation;
         }
 
         /// <summary>
