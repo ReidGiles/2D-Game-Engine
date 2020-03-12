@@ -76,8 +76,15 @@ namespace COMP2351_Game_Engine
         /// </summary>
         public void StateMachine()
         {
-            string trigger;
-            switch (_currentState)
+            // Update state logic
+            ((IUpdatable)_currentState).Update(_gameTime);
+            // Check trigger and store result
+            string trigger = _currentState.Trigger();
+            // Change state if a trigger is received
+            if (trigger != null)
+                _currentState = _stateDictionary[trigger];
+
+            /*switch (_currentState)
             {
                 case PlayerIdleState pis:
                     ((IUpdatable)_stateDictionary["Idle"]).Update(_gameTime);
@@ -103,7 +110,7 @@ namespace COMP2351_Game_Engine
                         _currentState = _stateDictionary[trigger];
                     }
                     break;
-            }
+            }*/
         }
 
         /// <summary>
