@@ -93,5 +93,10 @@ namespace COMP2351_Game_Engine.Component.Engine
         {
             _position.Y += pOverlapY;
         }
+
+        public void RemoveOverlapX(float pOverlapX)
+        {
+            _position.X += pOverlapX;
+        }
     }
 }

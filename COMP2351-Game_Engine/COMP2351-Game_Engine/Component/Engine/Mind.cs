@@ -142,6 +142,10 @@ namespace COMP2351_Game_Engine
             _colliders = pColliders;
         }
 
+        /// <summary>
+        /// Set the Physics Component reference 
+        /// </summary>
+        /// <param name="pPhysicsComponent"></param>
         public virtual void SetPhysicsComponent(IPhysicsComponent pPhysicsComponent)
         {
             _physicsComponent = pPhysicsComponent;

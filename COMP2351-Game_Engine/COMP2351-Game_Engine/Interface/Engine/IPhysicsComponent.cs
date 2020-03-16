@@ -14,6 +14,7 @@ namespace COMP2351_Game_Engine.Interface.Engine
         void ApplyImpulse(Vector2 closingVelocity);
         Vector2 GetPosition();
         void RemoveOverlapY(float pOverlapY);
+        void RemoveOverlapX(float pOverlapX);
         void ResetPosition(Vector2 pPos);
     }
 }

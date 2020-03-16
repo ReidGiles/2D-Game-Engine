@@ -9,14 +9,10 @@ namespace COMP2351_Game_Engine
 {
     class HostileMind : Mind
     {
-        // the effect of gravity on the entity
-        private float _gravity;
+        // the change in location
+        private Vector2 _dLocation;
         // the movement speed of the entity
         private float _speed;
-        // the velocity of the entity
-        private Vector2 _velocity;
-        // floor collision flag
-        private bool _floorCollide;
         // in air flag
         private bool _inAir;
         // on floor status flag
@@ -24,29 +20,26 @@ namespace COMP2351_Game_Engine
 
         public HostileMind()
         {
-            // set gravity
-            _gravity = 10;
+            // set _dLocation
+            _dLocation = new Vector2(0, 0);
             // set speed
             _speed = 3;
-            //Set velocity 
-            _velocity.X = 1;
-            _velocity.Y = -1;
             // set facing direction of the sprite
             _facingDirectionX = 1;
             // set mind ID
             _mindID = "Hostile";
-            // set floorCollide flag to false
-            _floorCollide = false;
             // set in Air flag to true
             _inAir = true;
             // set onFoor status to false
             _onFloor = false;
         }
 
-        public override float TranslateX()
+        public override Vector2 Translate()
         {
-            // move the sprite along the X axis in the direction it is facing at its speed
-            return (_speed * _facingDirectionX) * _velocity.X;
+            // move the _location by the difference to the physicsComponent location
+            _dLocation = _physicsComponent.GetPosition() - _location;
+            _location += _dLocation;
+            return _dLocation;
         }
 
         public override bool OnNewCollision(ICollisionInput args)
@@ -65,10 +58,16 @@ namespace COMP2351_Game_Engine
                 _facingDirectionX *= -1;
             }
 
-            // on collision with Floor change floorCollide flag to true
-            if (_collidedWith == "Floor" && _collidedThis == "HostileB")
+            // on collision with Floor change floor Collide flag to true
+            if (!_onFloor)
             {
-                _floorCollide = true;
+                if (_collidedWith == "Floor" && _collidedThis == "PlayerB")
+                {
+                    _inAir = false;
+                    _location.Y -= _overlap.Y;
+                    _physicsComponent.RemoveOverlapY(-_overlap.Y);
+                    _onFloor = true;
+                }
             }
 
             // on collisio with the base of the player and the top of this entity remove this entity from the scene
@@ -85,32 +84,34 @@ namespace COMP2351_Game_Engine
             return rtnValue;
         }
 
-        public override float TranslateY()
+        private void Move()
         {
-            // Gravity, always active
-            if (!_floorCollide && _inAir)
-            {
-                // if the character is in the air and not colliding with the floor then gravity is active
-                _gravity = 10;
-            }
-            else
-            {
-                // the player is colliding with the floor so inAir is false and gravity is set to 0 to emulate the floor holding the entity
-                _inAir = false;
-                _gravity = 0;
-            }
+            //Declare a vector to store the force needed to move
+            Vector2 force = new Vector2(0, 0);
+            //Set the x value of force to speed x direction
+            force.X = _speed * _facingDirectionX;
+
+            // update facing direction in entity
+            eInvertTexture(_facingDirectionX);
+            // apply force to the physics component to move entity
+            _physicsComponent.ApplyForce(force);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            _gameTime = gameTime;
+
+            // update location
+            UpdateLocation(eGetLocation());
+            // Call the Move method
+            Move();
+            // Update PhysicsComponent
+            _physicsComponent.UpdatePhysics();
+            // update location of mind and entity
+            eTranslate(Translate());
 
 
-            // if the onFloor status is true and the entity is not colliding with the floorCollide and also isnt being pushed out/into the floor
-            if (_onFloor && !_floorCollide)
-            {
-                // then the entity is in the air
-                _inAir = true;
-                _onFloor = false;
-            }
-
-            // apply gravity to the entity
-            return -_gravity * _velocity.Y;
+            _onFloor = false;
         }
     }
 }

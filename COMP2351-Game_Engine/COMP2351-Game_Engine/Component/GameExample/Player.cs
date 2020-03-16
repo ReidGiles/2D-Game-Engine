@@ -12,6 +12,7 @@ namespace COMP2351_Game_Engine
 {
     class Player : RelicHunterEntity, IPlayer, ICollisionListener
     {
+
         public Player()
         {
         }
@@ -23,7 +24,7 @@ namespace COMP2351_Game_Engine
         {
             // Set initial entity mind:
             SetMind(_aiComponentManager.RequestMind<PlayerMind>());
-
+            // Set _physicsComponent and add it to the mind
             _physicsComponent = new PhysicsComponent(location,1,new Vector2(0f, 0.9f),new Vector2(0f,0.9f));
             _mind.SetPhysicsComponent(_physicsComponent);
         }
@@ -71,41 +72,13 @@ namespace COMP2351_Game_Engine
             ColliderOrigin.X = location.X + 0.5f * texture.Width;
             ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
             // Add collider to list
-            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height - 20, "PlayerM"));
+            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "PlayerM"));
 
             // Add the collider list to the mind
             _mind.SetCollider(_colliders.Cast<ICreateCollider>().ToList());
 
             // SET has collider bool to true
             hasCollider = true;
-        }
-
-        /// <summary>
-        /// Overides Update() with unique entity behaviour.
-        /// </summary>
-        public override void Update(GameTime gameTime)
-        {
-            // if there are no colliders then set them using SetCollider method
-            /*
-            if (_mind != null)
-            {
-                //tell the mind the location of the player
-                _mind.UpdateLocation(location);
-                //tell the mind the value for texture and check to see if texture needs to be inverted
-                InvertTexture(_mind.GetFacingDirection());
-                //updates the position of the player
-                //float DX = _mind.TranslateX();
-                //float DY = _mind.TranslateY();
-                //Translate(DX, DY);
-                // Change in Entity location
-                Vector2 dlocation = _mind.Translate();
-                Translate(dlocation);
-            }*/
-            //else Console.WriteLine("Error: Mind is null");
-            /*Console.WriteLine("Top"+((ICreateCollider)_collider).CreateCollider()[0]);
-            Console.WriteLine("Bottom" + ((ICreateCollider)_collider).CreateCollider()[1]);
-            Console.WriteLine("Left" + ((ICreateCollider)_collider).CreateCollider()[2]);
-            Console.WriteLine("Right" + ((ICreateCollider)_collider).CreateCollider()[3]);*/
         }
     }
 }

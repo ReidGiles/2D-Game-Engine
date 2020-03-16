@@ -122,23 +122,6 @@ namespace COMP2351_Game_Engine
             _physicsComponent.ApplyForce(force);
         }
 
-        // TranslateX override for player specific movement
-        public override float TranslateX()
-        {
-            _dLocation.X = _physicsComponent.GetPosition().X - _location.X;
-            _location.X += _dLocation.X;
-            return _dLocation.X;
-        }
-
-        // TranslateY override for player specific movement
-        public override float TranslateY()
-        {
-            // apply gravity to the entity
-            _dLocation.Y = _physicsComponent.GetPosition().Y - _location.Y;
-            _location.Y += _dLocation.Y;
-            return _dLocation.Y;
-        }
-
         public override Vector2 Translate()
         {
             _dLocation = _physicsComponent.GetPosition() - _location;
@@ -146,6 +129,7 @@ namespace COMP2351_Game_Engine
             return _dLocation;
         }
 
+        #region Collision
         // Handles new collisions args passed by entity
         public override bool OnNewCollision(ICollisionInput args)
         {
@@ -229,15 +213,15 @@ namespace COMP2351_Game_Engine
             // on collision with the Bounday collider and the player while moving right
             if (_collidedWith == "Boundary" && _collidedThis == "PlayerM" && _facingDirectionX == 1)
             {
-                // set rightCollide flag to true
-                _rightCollide = true;
+                _location.X -= _overlap.X;
+                _physicsComponent.RemoveOverlapX(-_overlap.X);
             }
 
             // on collision with the Bounday collider and the player while moving left
             if (_collidedWith == "Boundary" && _collidedThis == "PlayerM" && _facingDirectionX == -1)
             {
-                // set leftCollide flag to true
-                _leftCollide = true;
+                _location.X += _overlap.X;
+                _physicsComponent.RemoveOverlapX(+_overlap.X);
             }
         }
 
@@ -247,7 +231,8 @@ namespace COMP2351_Game_Engine
             if (_collidedWith == "Ceiling" && _collidedThis == "PlayerT")
             {
                 // set jump value to 0
-                
+                _location.Y -= _overlap.Y;
+                _physicsComponent.RemoveOverlapY(-_overlap.Y);
             }
         }
 
@@ -273,6 +258,7 @@ namespace COMP2351_Game_Engine
                 Console.WriteLine("Bone Saw Relic Aquired");
             }
         }
+        #endregion
 
         public override void Update(GameTime gameTime)
         {
@@ -282,7 +268,7 @@ namespace COMP2351_Game_Engine
             UpdateLocation(eGetLocation());
             // Update PhysicsComponent
             _physicsComponent.UpdatePhysics();
-
+            // update location of mind and entity
             eTranslate(Translate());
 
             // Declare required states
