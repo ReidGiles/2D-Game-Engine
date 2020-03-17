@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 
 namespace COMP2351_Game_Engine
@@ -124,6 +125,7 @@ namespace COMP2351_Game_Engine
             gameDemo.LoadTextures(textures);
             // load gameDemo Content
             gameDemo.LoadContent();
+            _audioManager.PlaySong("Background_Music", 1.0f, true);
         }
 
         /// <summary>
