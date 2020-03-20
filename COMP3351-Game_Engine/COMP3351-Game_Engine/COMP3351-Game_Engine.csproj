@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Component\Engine\AIComponentManager.cs" />
+    <Compile Include="Component\Engine\Animator.cs" />
     <Compile Include="Component\Engine\CollisionHandler.cs" />
     <Compile Include="Component\Engine\CollisionManager.cs" />
     <Compile Include="Component\Engine\Delegates.cs" />

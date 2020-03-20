@@ -36,8 +36,6 @@ namespace COMP3351_Game_Engine
         private IAudioPlayer _audioManager;
         // reference to the sceneGraph
         private ISceneGraph sceneGraph;
-        // List of Textures
-        private Texture2D[] textures;
         // reference to the headerLoaction
         private Vector2 backgroundLocation;
         private Vector2 backgroundLocation2;
@@ -88,7 +86,7 @@ namespace COMP3351_Game_Engine
             // Initialise audio manager
             _audioManager = new SoundManager(Content);
             // initialise a new aiComponontManager
-            aiComponentManager = new AIComponentManager(inputManager, (IAnimator)_renderManager, _audioManager, sceneManager);
+            aiComponentManager = new AIComponentManager(inputManager, _audioManager, sceneManager, Content);
             // initialise a new entityManager
             entityManager = new EntityManager(collisionManager, sceneGraph, aiComponentManager);           
             // set headerLoaction

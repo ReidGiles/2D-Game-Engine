@@ -77,6 +77,8 @@
     <Compile Include="Mind\SawMind.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\HostileIdleState.cs" />
+    <Compile Include="States\HostileRunState.cs" />
     <Compile Include="States\PlayerIdleState.cs" />
     <Compile Include="States\PlayerJumpState.cs" />
     <Compile Include="States\PlayerRunState.cs" />

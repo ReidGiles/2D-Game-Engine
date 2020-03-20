@@ -26,11 +26,12 @@ namespace COMP3351_Engine_Demo
 
         // Animation frame time
         private float _frameTime;
+        private int _entityUID;
 
         /// <summary>
         /// Constructor for PlayerRunState
         /// </summary>
-        public PlayerRunState(IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
+        public PlayerRunState(int pEntityID, IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
         {
             // INSTANTIATE _animator
             _animator = pAnimator;
@@ -40,6 +41,7 @@ namespace COMP3351_Engine_Demo
             _args = pArgs;
             // INSTANTIATE _frameTime
             _frameTime = 0.009f;
+            _entityUID = pEntityID;
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace COMP3351_Engine_Demo
 
             _gameTime = gameTime;
 
-            _animator.Animate("Player", "SmileyWalkAtlas", 4, 4, _frameTime);
+            _animator.Animate(_entityUID, "SmileyWalkAtlas", 4, 4, _frameTime);
 
             // Calculate elapsed game time for audio
             _soundTime += (float)gameTime.ElapsedGameTime.TotalSeconds;

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace COMP3351_Game_Engine
 {
-    class RenderManager : IUpdatable, IAnimator
+    class RenderManager : IUpdatable
     {
         private GraphicsDeviceManager _graphicsDeviceManager;
         private SpriteBatch _spriteBatch;
@@ -57,97 +57,7 @@ namespace COMP3351_Game_Engine
             _content = pContentManager;
         }
 
-        /// <summary>
-        /// Animates an entity using a custom texture atlas and frame time
-        /// </summary>
-        /// <param name="pEntityName"></param>
-        /// <param name="pTextureAtlas"></param>
-        /// <param name="pFrameTime"></param>
-        public void Animate(string pEntityName, string pTextureAtlas, int pRows, int pColumns, float pFrameTime)
-        {
-            SetupTextureAtlas(pRows, pColumns, pFrameTime);
-            // Calculate elapsed game time for animations
-            if (_gameTime != null)
-                _renderTime += (float)_gameTime.ElapsedGameTime.TotalSeconds;
-
-            // Move to next frame
-            _currentFrame++;
-
-
-            // If current frame is last frame
-            if (_currentFrame == _totalFrames)
-                // Restart animation from first frame
-                _currentFrame = 0;
-
-            /*FOR loop, remove frame time from render time and count how many cycles it takes for frame time to become less than render time
-              IF the result is 0, increment one frame, otherwise increment more frames*/
-
-            if (_renderTime > pFrameTime)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    // Subtract frame time from render time
-                    float a = _renderTime - pFrameTime;
-                    // IF frame time < render time, increment frame by i
-                    if (a < _renderTime)
-                    {
-                        // Move to next frame
-                        _currentFrame += i;
-                        // Update texture
-                        SetTexture(pEntityName, pTextureAtlas);
-                        // Reset render time
-                        _renderTime = 0f;
-                        // Break loop
-                        break;
-                    }
-                }               
-            }
-        }
-
-        /// <summary>
-        /// Sets variables relevant to texture atlas animation
-        /// </summary>
-        /// <param name="pRows"></param>
-        /// <param name="pColumns"></param>
-        /// <param name="pFrameTime"></param>
-        private void SetupTextureAtlas(int pRows, int pColumns, float pFrameTime)
-        {
-            // SET _rows
-            _rows = pRows;
-            // SET _columns
-            _columns = pColumns;
-            // SET _totalFrames
-            _totalFrames = pRows * pColumns;
-            // SET _frameTime
-            _frameTime = pFrameTime;
-        }
-
-        /// <summary>
-        /// Set the texture of an entity
-        /// </summary>
-        /// <param name="pUName"></param>
-        /// <param name="pTexture"></param>
-        private void SetTexture(string pUName, string pTextureName)
-        {
-            // Retrieve entity by unique name
-            IEntity e = _sceneManager.GetEntity(pUName);         
-            // Set new texture for entity
-            e.SetTexture(_content.Load<Texture2D>(pTextureName), _rows, _columns, _currentFrame);
-            
-        }
-
-        /// <summary>
-        /// Set the texture of an entity
-        /// </summary>
-        /// <param name="pUName"></param>
-        /// <param name="pTexture"></param>
-        private void SetTexture(string pUName, string pTextureName, int pCurrentFrame)
-        {
-            // Retrieve entity by unique name
-            IEntity e = _sceneManager.GetEntity(pUName);
-            // Set new texture for entity
-            e.SetTexture(_content.Load<Texture2D>(pTextureName), _rows, _columns, pCurrentFrame);
-        }
+        
 
         /// <summary>
         /// Renders all active entities

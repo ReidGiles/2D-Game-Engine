@@ -61,10 +61,10 @@ namespace COMP3351_Game_Engine
             entity.SetAIComponentManager(_AIComponentManager);
             // set the texture for the entity
             entity.SetTexture(pTexture);
-            // initialise the entity
-            entity.Initialise();
             // Generate the entities UID and UName
             GenerateUID(entity, pUName);
+            // initialise the entity
+            entity.Initialise();           
             // Add entity to the entity list
             _entityList.Add(entity);
             

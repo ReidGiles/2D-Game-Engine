@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace COMP3351_Game_Engine
 {
@@ -14,29 +15,29 @@ namespace COMP3351_Game_Engine
         private IList<IMind> _mindList;
         // reference to the input manager
         private IInputManager _inputManager;
-        // Reference to the render manager
-        private IAnimator _animator;
         // Reference to the audio manager
         private IAudioPlayer _audioManager;
 
         private ISceneManager _sceneManager;
 
+        private ContentManager _contentManager;
+
         /// <summary>
         /// //constructor for the AI component manager
         /// </summary>
         /// <param name="pInputManager"></param>
-        public AIComponentManager(IInputManager pInputManager, IAnimator pAnimator, IAudioPlayer pAudioManager, ISceneManager pSceneManager)
+        public AIComponentManager(IInputManager pInputManager, IAudioPlayer pAudioManager, ISceneManager pSceneManager, ContentManager pContentManager)
         {
             //initialise _mindList
             _mindList = new List<IMind>();
             //initialise _inputManager
             _inputManager = pInputManager;
-            // Initialise _animator
-            _animator = pAnimator;
             // Initialise _audioManager
             _audioManager = pAudioManager;
 
             _sceneManager = pSceneManager;
+
+            _contentManager = pContentManager;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace COMP3351_Game_Engine
             //instanciate a new Mind
             IMind mind = new T();
             // Deploy _animator to mind
-            mind.SetAnimator(_animator);
+            mind.SetAnimator(new Animator(_sceneManager, _contentManager));
             // Deploy _audioManager to mind
             mind.SetAudioPlayer(_audioManager);
             // Add a keyboard listener if the class implements the interface for it

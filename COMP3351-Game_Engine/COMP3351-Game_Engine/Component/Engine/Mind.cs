@@ -13,6 +13,8 @@ namespace COMP3351_Game_Engine
 {
     public abstract class Mind : IMind, IUpdatable
     {
+        // Entity UID
+        protected int _entityUID;
         // Entity texture:
         protected Texture2D _texture;
         // Entity texture FacingDirection
@@ -53,6 +55,11 @@ namespace COMP3351_Game_Engine
         public PassFloat eInvertTexture;
 
         public GetVector2 eGetLocation;
+
+        public void SetEntityUID(int pUID)
+        {
+            _entityUID = pUID;
+        }
 
         public void SetAnimator(IAnimator pAnimator)
         {

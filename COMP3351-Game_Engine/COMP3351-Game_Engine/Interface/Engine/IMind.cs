@@ -25,5 +25,6 @@ namespace COMP3351_Game_Engine
         void SetAnimator(IAnimator pAnimator);
         void SetAudioPlayer(IAudioPlayer pAudioPlayer);
         void StateMachine();
+        void SetEntityUID(int pUID);
     }
 }

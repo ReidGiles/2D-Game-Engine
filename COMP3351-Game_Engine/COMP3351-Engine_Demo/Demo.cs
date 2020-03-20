@@ -17,6 +17,7 @@ namespace COMP3351_Engine_Demo
         public Demo()
         {
             _world = new World(this);
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -25,6 +26,7 @@ namespace COMP3351_Engine_Demo
         private void Begin()
         {
             // Loads the demo world
+            SubscribeListener(_world);
             _world.Load();
         }
 

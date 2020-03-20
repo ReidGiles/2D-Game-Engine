@@ -9,6 +9,6 @@ namespace COMP3351_Game_Engine
 {
     public interface IAnimator
     {
-        void Animate(string pEntityName, string pTextureAtlas, int pRows, int pColumns, float pFrameTime);
+        void Animate(int pEntityUID, string pTextureAtlas, int pRows, int pColumns, float pFrameTime);
     }
 }

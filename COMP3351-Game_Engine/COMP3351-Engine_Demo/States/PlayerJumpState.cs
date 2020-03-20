@@ -17,6 +17,7 @@ namespace COMP3351_Engine_Demo
         IKeyboardInput _args;
         // Animation frame time
         private float _frameTime;
+        private int _entityUID;
 
         private IAudioPlayer _audioPlayer;
 
@@ -25,13 +26,14 @@ namespace COMP3351_Engine_Demo
         /// </summary>
         /// <param name="pAnimator"></param>
         /// <param name="pArgs"></param>
-        public PlayerJumpState(IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
+        public PlayerJumpState(int pEntityID, IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
         {
             _animator = pAnimator;
             _audioPlayer = pAudioPlayer;
             _args = pArgs;
             // INSTANTIATE _frameTime
             _frameTime = 0.009f;
+            _entityUID = pEntityID;
         }
         /// <summary>
         /// Updates the state
@@ -55,7 +57,7 @@ namespace COMP3351_Engine_Demo
         /// <param name="texture"></param>
         private void Behavior()
         {
-            _animator.Animate("Player", "SmileyWalkAtlas", 4, 4, _frameTime);
+            _animator.Animate(_entityUID, "SmileyWalkAtlas", 4, 4, _frameTime);
             _audioPlayer.PlaySound("Jump");
         }
     }

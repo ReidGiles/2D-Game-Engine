@@ -27,6 +27,8 @@ namespace COMP3351_Engine_Demo
 
             _physicsComponent = new PhysicsComponent(location,1,new Vector2(0f, 0.9f),new Vector2(0f,0.9f));
             _mind.SetPhysicsComponent(_physicsComponent);
+            _mind.SetEntityUID(GetUID());
+            Console.WriteLine(GetUID());
         }
 
         public void OnNewCollision(object sender, ICollisionInput args)
