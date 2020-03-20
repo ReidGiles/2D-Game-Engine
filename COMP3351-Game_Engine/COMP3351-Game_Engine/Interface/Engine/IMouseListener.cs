@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace COMP3351_Game_Engine
 {
-    interface IMouseListener
+    public interface IMouseListener
     {
         void OnNewMouseInput(object sender, IMouseInput args);
     }

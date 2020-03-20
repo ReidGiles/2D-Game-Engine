@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
-    class Platform : RelicHunterEntity, ICollisionListener
+    class PlatformEndL : Entity, ICollisionListener
     {
-        public Platform()
+        public PlatformEndL()
         {
 
         }
@@ -44,10 +45,18 @@ namespace COMP3351_Game_Engine
             // SET Left collider to keep an hostile entities on the platform when moving
             _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Boundary"));
 
+            // Set Collider for the Boundary for patrolling Hostiles collision Box
+            ColliderOrigin.X = location.X + 1;
+            ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
+            // SET Left collider to keep an hostile entities on the platform when moving
+            _colliders.Add(new RectCollider(ColliderOrigin, 2, texture.Height, "HBoundary"));
+
             // // Set Collider for the floor
             ColliderOrigin.X = location.X + 0.5f * texture.Width;
             ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
             _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Floor"));
+
+
 
             // Add the collider list to the mind
             _mind.SetCollider(_colliders.Cast<ICreateCollider>().ToList());

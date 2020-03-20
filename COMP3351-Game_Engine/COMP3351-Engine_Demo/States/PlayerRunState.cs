@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
     class PlayerRunState : IState, IUpdatable
     {

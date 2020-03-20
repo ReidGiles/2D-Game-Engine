@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
-    class Relic : RelicHunterEntity, ICollisionListener
+    class Gold : Entity, ICollisionListener
     {
-        public Relic()
+        public Gold()
         { }
 
         public override void Initialise()
         {
             // Set initial entity mind:
-            _mind = _aiComponentManager.RequestMind<RelicMind>();
+            _mind = _aiComponentManager.RequestMind<GoldMind>();
         }
 
         public void OnNewCollision(object sender, ICollisionInput args)
@@ -49,7 +50,7 @@ namespace COMP3351_Game_Engine
             ColliderOrigin.X = location.X + 0.5f * texture.Width;
             ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
             // Add collider to list
-            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "RelicSaw"));
+            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "CoinGold"));
 
             // Add the collider list to the mind
             _mind.SetCollider(_colliders.Cast<ICreateCollider>().ToList());

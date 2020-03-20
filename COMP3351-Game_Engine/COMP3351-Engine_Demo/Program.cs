@@ -1,4 +1,5 @@
 ﻿using System;
+using COMP3351_Game_Engine;
 
 namespace COMP3351_Engine_Demo
 {
@@ -14,7 +15,7 @@ namespace COMP3351_Engine_Demo
         [STAThread]
         static void Main()
         {
-            Game1 game = new Game1();
+            Demo game = new Demo();
             game.Run();
         }
     }

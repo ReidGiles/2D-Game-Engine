@@ -10,7 +10,7 @@ namespace COMP3351_Game_Engine
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Engine : Game, IEngine
+    public class Engine : Game
     {
         // reference to the Graphics Device Manager
         GraphicsDeviceManager graphics;
@@ -38,8 +38,6 @@ namespace COMP3351_Game_Engine
         private ISceneGraph sceneGraph;
         // List of Textures
         private Texture2D[] textures;
-        // reference to the engineDemo class
-        private GameDemo gameDemo;
         // reference to the headerLoaction
         private Vector2 backgroundLocation;
         private Vector2 backgroundLocation2;
@@ -48,7 +46,7 @@ namespace COMP3351_Game_Engine
         // camera position to follow the player
         private Vector3 cameraPos;
 
-        protected bool _ready;
+        public bool _ready;
 
         public Engine()
         {
@@ -93,13 +91,6 @@ namespace COMP3351_Game_Engine
             aiComponentManager = new AIComponentManager(inputManager, (IAnimator)_renderManager, _audioManager, sceneManager);
             // initialise a new entityManager
             entityManager = new EntityManager(collisionManager, sceneGraph, aiComponentManager);           
-            // initialise a new engineDemo
-            gameDemo = new GameDemo();
-            // run engineDemo initialise method
-            gameDemo.Initialise(entityManager, sceneManager, collisionManager, aiComponentManager, inputManager, sceneGraph);
-            // add input listeners to the engineDemo
-            inputManager.AddListener(((IKeyboardListener)gameDemo).OnNewKeyboardInput);
-            inputManager.AddListener(((IMouseListener)gameDemo).OnNewMouseInput);
             // set headerLoaction
             backgroundLocation = new Vector2(-ScreenWidth / 2, 0);
             backgroundLocation2 = new Vector2(backgroundLocation.X + ScreenWidth + 1, 0);
@@ -119,15 +110,6 @@ namespace COMP3351_Game_Engine
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-
-            // set textures
-            textures = new Texture2D[] {Content.Load<Texture2D>("Background"), Content.Load<Texture2D>("Player_Idle"), Content.Load<Texture2D>("Hostile"), Content.Load<Texture2D>("Platform"), Content.Load<Texture2D>("Saw"), Content.Load<Texture2D>("CoinGold"), Content.Load<Texture2D>("Relic"), Content.Load<Texture2D>("Floor"), Content.Load<Texture2D>("Wall") };
-
-            // load textures into engineDemo
-            gameDemo.LoadTextures(textures);
-            // load gameDemo Content
-            gameDemo.LoadContent();
-            _audioManager.PlaySong("Background_Music", 1.0f, true);
 
             _ready = true;
         }
@@ -160,7 +142,7 @@ namespace COMP3351_Game_Engine
             ((IUpdatable)entityManager).Update(gameTime);
 
             // update teh engineDemo
-            gameDemo.Update();
+            //gameDemo.Update();
 
             base.Update(gameTime);
         }
@@ -187,6 +169,39 @@ namespace COMP3351_Game_Engine
         public Texture2D LoadTexture(string pFileName)
         {
             return Content.Load<Texture2D>(pFileName);
+        }
+
+        public void PlaySound(string pFileName)
+        {
+        }
+
+        public void PlaySong(string pFileName, float pVolume, bool pRepeating)
+        {
+            _audioManager.PlaySong(pFileName, pVolume, pRepeating);
+        }
+
+        public void PlaySong(string pFileName, float pVolume)
+        {
+            _audioManager.PlaySong(pFileName, pVolume, false);
+        }
+
+        public void PlaySong(string pFileName, bool pRepeating)
+        {
+            _audioManager.PlaySong(pFileName, 1.00f, pRepeating);
+        }
+
+        public void PlaySong(string pFileName)
+        {
+            _audioManager.PlaySong(pFileName, 1.00f, false);
+        }
+
+        public void SubscribeListener(IKeyboardListener pListener)
+        {
+            inputManager.AddListener(pListener.OnNewKeyboardInput);
+        }
+        public void SubscribeListener(IMouseListener pListener)
+        {
+            inputManager.AddListener(pListener.OnNewMouseInput);
         }
     }
 }

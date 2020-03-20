@@ -1,26 +1,23 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
-    class PlatformEndR : RelicHunterEntity, ICollisionListener
+    class Saw : Entity, ICollisionListener
     {
-        public PlatformEndR()
+        public Saw()
         {
-
         }
 
-        /// <summary>
-        /// Initialisation logic
-        /// </summary>
         public override void Initialise()
         {
             // Set initial entity mind:
-            _mind = _aiComponentManager.RequestMind<PlatformMind>();
+            _mind = _aiComponentManager.RequestMind<SawMind>();
         }
 
         public void OnNewCollision(object sender, ICollisionInput args)
@@ -41,20 +38,11 @@ namespace COMP3351_Game_Engine
             // Add collider to list
             _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Overall"));
 
-            // SET Left collider to keep an hostile entities on the platform when moving
-            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Boundary"));
-
-            // Set Collider for the Boundary for patrolling Hostiles collision Box
-            ColliderOrigin.X = location.X + texture.Width - 1;
-            ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
-            // SET Left collider to keep an hostile entities on the platform when moving
-            _colliders.Add(new RectCollider(ColliderOrigin, 2, texture.Height, "HBoundary"));
-
-            // // Set Collider for the floor
+            // Set Collider for the Top of the Player
             ColliderOrigin.X = location.X + 0.5f * texture.Width;
             ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
-            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Floor"));
-
+            // Add collider to list
+            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Saw"));
 
             // Add the collider list to the mind
             _mind.SetCollider(_colliders.Cast<ICreateCollider>().ToList());
@@ -73,6 +61,8 @@ namespace COMP3351_Game_Engine
             {
                 SetCollider();
             }
+            // rotate the texture every update
+            rotation += 0.05f;
         }
     }
 }

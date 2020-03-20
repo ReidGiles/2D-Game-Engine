@@ -56,12 +56,31 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Entity\Floor.cs" />
+    <Compile Include="Entity\Hostile.cs" />
+    <Compile Include="Entity\Platform.cs" />
+    <Compile Include="Entity\PlatformEndL.cs" />
+    <Compile Include="Entity\PlatformEndR.cs" />
+    <Compile Include="Entity\PlatformSingle.cs" />
+    <Compile Include="Entity\Saw.cs" />
+    <Compile Include="Mind\FloorMind.cs" />
     <Compile Include="Entity\IPlayer.cs" />
     <Compile Include="Entity\Player.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="Demo.cs" />
+    <Compile Include="Entity\Gold.cs" />
+    <Compile Include="Mind\GoldMind.cs" />
+    <Compile Include="Mind\HostileMind.cs" />
+    <Compile Include="Mind\PlatformMind.cs" />
     <Compile Include="Mind\PlayerMind.cs" />
+    <Compile Include="Entity\Relic.cs" />
+    <Compile Include="Mind\RelicMind.cs" />
+    <Compile Include="Mind\SawMind.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\PlayerIdleState.cs" />
+    <Compile Include="States\PlayerJumpState.cs" />
+    <Compile Include="States\PlayerRunState.cs" />
+    <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

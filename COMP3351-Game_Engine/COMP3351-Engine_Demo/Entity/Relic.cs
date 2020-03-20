@@ -1,30 +1,36 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
-    class Floor : RelicHunterEntity, ICollisionListener
+    class Relic : Entity, ICollisionListener
     {
-        public Floor()
-        {
-        }
+        public Relic()
+        { }
 
-        /// <summary>
-        /// Initialisation logic
-        /// </summary>
         public override void Initialise()
         {
             // Set initial entity mind:
-            _mind = _aiComponentManager.RequestMind<FloorMind>();
+            _mind = _aiComponentManager.RequestMind<RelicMind>();
         }
 
         public void OnNewCollision(object sender, ICollisionInput args)
         {
-
+            // Check if this entity is the one colliding
+            if (_uid == args.GetUID()[0] || _uid == args.GetUID()[1])
+            {
+                // If entity is not flagged for the removal from the scene using _killSelf
+                if (!_killSelf)
+                {
+                    //set _killSelf to the result of the collision method in the mind
+                    this._killSelf = _mind.OnNewCollision(args);
+                }
+            }
         }
 
         public override void SetCollider()
@@ -40,11 +46,11 @@ namespace COMP3351_Game_Engine
             // Add collider to list
             _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Overall"));
 
-            // Set Collider for the floor
+            // Set Collider for the Top of the Player
             ColliderOrigin.X = location.X + 0.5f * texture.Width;
             ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
             // Add collider to list
-            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Floor"));
+            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "RelicSaw"));
 
             // Add the collider list to the mind
             _mind.SetCollider(_colliders.Cast<ICreateCollider>().ToList());
@@ -63,25 +69,6 @@ namespace COMP3351_Game_Engine
             {
                 SetCollider();
             }
-            if (_mind != null)
-            {
-                //tell the mind the location of the player
-                _mind.UpdateLocation(location);
-                //updates the position of the player
-                float DX = _mind.TranslateX();
-                float DY = _mind.TranslateY();
-                Translate(DX, DY);
-                // updates the position of the colliders to follow the player
-                foreach (ICollider e in _colliders)
-                {
-                    e.Translate(DX, DY);
-                }
-            }
-            //else Console.WriteLine("Error: Mind is null");
-            /*Console.WriteLine("Top"+((ICreateCollider)_collider).CreateCollider()[0]);
-            Console.WriteLine("Bottom" + ((ICreateCollider)_collider).CreateCollider()[1]);
-            Console.WriteLine("Left" + ((ICreateCollider)_collider).CreateCollider()[2]);
-            Console.WriteLine("Right" + ((ICreateCollider)_collider).CreateCollider()[3]);*/
         }
     }
 }

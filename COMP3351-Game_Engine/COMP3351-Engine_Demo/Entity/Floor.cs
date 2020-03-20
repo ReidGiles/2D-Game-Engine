@@ -1,22 +1,26 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
-    class Saw : RelicHunterEntity, ICollisionListener
+    class Floor : Entity, ICollisionListener
     {
-        public Saw()
+        public Floor()
         {
         }
 
+        /// <summary>
+        /// Initialisation logic
+        /// </summary>
         public override void Initialise()
         {
             // Set initial entity mind:
-            _mind = _aiComponentManager.RequestMind<SawMind>();
+            _mind = _aiComponentManager.RequestMind<FloorMind>();
         }
 
         public void OnNewCollision(object sender, ICollisionInput args)
@@ -37,11 +41,11 @@ namespace COMP3351_Game_Engine
             // Add collider to list
             _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Overall"));
 
-            // Set Collider for the Top of the Player
+            // Set Collider for the floor
             ColliderOrigin.X = location.X + 0.5f * texture.Width;
             ColliderOrigin.Y = location.Y + 0.5f * texture.Height;
             // Add collider to list
-            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Saw"));
+            _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, texture.Height, "Floor"));
 
             // Add the collider list to the mind
             _mind.SetCollider(_colliders.Cast<ICreateCollider>().ToList());
@@ -60,8 +64,25 @@ namespace COMP3351_Game_Engine
             {
                 SetCollider();
             }
-            // rotate the texture every update
-            rotation += 0.05f;
+            if (_mind != null)
+            {
+                //tell the mind the location of the player
+                _mind.UpdateLocation(location);
+                //updates the position of the player
+                float DX = _mind.TranslateX();
+                float DY = _mind.TranslateY();
+                Translate(DX, DY);
+                // updates the position of the colliders to follow the player
+                foreach (ICollider e in _colliders)
+                {
+                    e.Translate(DX, DY);
+                }
+            }
+            //else Console.WriteLine("Error: Mind is null");
+            /*Console.WriteLine("Top"+((ICreateCollider)_collider).CreateCollider()[0]);
+            Console.WriteLine("Bottom" + ((ICreateCollider)_collider).CreateCollider()[1]);
+            Console.WriteLine("Left" + ((ICreateCollider)_collider).CreateCollider()[2]);
+            Console.WriteLine("Right" + ((ICreateCollider)_collider).CreateCollider()[3]);*/
         }
     }
 }

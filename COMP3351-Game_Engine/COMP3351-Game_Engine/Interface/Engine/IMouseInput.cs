@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace COMP3351_Game_Engine
 {
-    interface IMouseInput
+    public interface IMouseInput
     {
         int[] GetMouseVal();
     }

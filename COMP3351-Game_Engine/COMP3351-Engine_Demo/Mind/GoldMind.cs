@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
-    class RelicMind : Mind
+    class GoldMind : Mind
     {
-        public RelicMind()
+        public GoldMind()
         {
             //initialise the mind ID
-            _mindID = "Relic";
+            _mindID = "Gold";
         }
 
         public override bool OnNewCollision(ICollisionInput args)
         {
             bool rtnValue = base.OnNewCollision(args);
 
-            // if the player and Relic collide
-            if (_collidedWith == "PlayerB" && _collidedThis == "RelicSaw" || _collidedWith == "PlayerT" && _collidedThis == "RelicSaw")
+            // if the player and CoinGold collide
+            if (_collidedWith == "PlayerB" && _collidedThis == "CoinGold" || _collidedWith == "PlayerT" && _collidedThis == "CoinGold")
             {
                 // remove the CoinGold from the secene
                 rtnValue = true;

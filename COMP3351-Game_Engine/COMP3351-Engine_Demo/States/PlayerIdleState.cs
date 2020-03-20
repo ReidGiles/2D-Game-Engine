@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
-    class PlayerJumpState : IState, IUpdatable
+    class PlayerIdleState : IState, IUpdatable
     {
-        // animator to set textures/animate
         private IAnimator _animator;
         // args to store the keyboard inputs
         IKeyboardInput _args;
@@ -20,11 +20,12 @@ namespace COMP3351_Game_Engine
         private IAudioPlayer _audioPlayer;
 
         /// <summary>
-        /// PlayerJumpState constructor
+        /// Constructor for PlayerIdleState
         /// </summary>
         /// <param name="pAnimator"></param>
+        /// <param name="pAudioPlayer"></param>
         /// <param name="pArgs"></param>
-        public PlayerJumpState(IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
+        public PlayerIdleState(IAnimator pAnimator, IAudioPlayer pAudioPlayer, IKeyboardInput pArgs)
         {
             _animator = pAnimator;
             _audioPlayer = pAudioPlayer;
@@ -32,18 +33,33 @@ namespace COMP3351_Game_Engine
             // INSTANTIATE _frameTime
             _frameTime = 0.009f;
         }
+
         /// <summary>
-        /// Updates the state
+        /// Updates state
         /// </summary>
+        /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
             Behavior();
         }
+
+        /// <summary>
+        /// State behaviour logic
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="texture"></param>
         public string Trigger()
         {
-            if ( !( _args.GetInputKey().Contains(Keys.Up) ) )
+            foreach (Keys k in _args.GetInputKey())
             {
-                return "Idle";
+                if (k == Keys.Up || k == Keys.Space || k == Keys.W)
+                {
+                    return "Jump";
+                }
+                else if (k == Keys.Left || k == Keys.Right || k == Keys.A|| k == Keys.D)
+                {
+                    return "Run";
+                }
             }
             return null;
         }
@@ -55,7 +71,6 @@ namespace COMP3351_Game_Engine
         private void Behavior()
         {
             _animator.Animate("Player", "SmileyWalkAtlas", 4, 4, _frameTime);
-            _audioPlayer.PlaySound("Jump");
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace COMP3351_Game_Engine
 {
-    interface IUpdatable
+    public interface IUpdatable
     {
         void Update(GameTime gameTime);
     }

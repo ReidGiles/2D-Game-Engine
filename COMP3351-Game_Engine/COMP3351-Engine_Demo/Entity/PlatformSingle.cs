@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
-    class PlatformSingle : RelicHunterEntity, ICollisionListener
+    class PlatformSingle : Entity, ICollisionListener
     {
         public PlatformSingle()
         {

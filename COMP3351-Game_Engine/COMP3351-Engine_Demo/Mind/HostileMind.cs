@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using COMP3351_Game_Engine;
 
-namespace COMP3351_Game_Engine
+namespace COMP3351_Engine_Demo
 {
     class HostileMind : Mind
     {
@@ -108,7 +109,6 @@ namespace COMP3351_Game_Engine
                 _inAir = true;
                 _onFloor = false;
             }
-
             // apply gravity to the entity
             return -_gravity * _velocity.Y;
         }
