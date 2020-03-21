@@ -22,6 +22,7 @@ namespace COMP3351_Engine_Demo
         private bool _inAir;
         // on floor status flag
         private bool _onFloor;
+        bool statesDeclared;
 
         public HostileMind()
         {
@@ -42,6 +43,16 @@ namespace COMP3351_Engine_Demo
             _inAir = true;
             // set onFoor status to false
             _onFloor = false;
+        }
+
+        /// <summary>
+        /// Required states are declared here to be added to game code.
+        /// </summary>
+        private void DeclareStates()
+        {
+            _stateDictionary.Add("Run", new HostileRunState(_entityUID, _animator, _audioPlayer));
+
+            _currentState = _stateDictionary["Run"];
         }
 
         public override float TranslateX()
@@ -111,6 +122,20 @@ namespace COMP3351_Engine_Demo
             }
             // apply gravity to the entity
             return -_gravity * _velocity.Y;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            _gameTime = gameTime;
+            // Declare required states
+            if (!statesDeclared)
+            {
+                DeclareStates();
+                statesDeclared = true;
+            }
+
+            // Run state machine
+            StateMachine();
         }
     }
 }

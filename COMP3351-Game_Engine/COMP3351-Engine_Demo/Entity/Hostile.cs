@@ -17,6 +17,7 @@ namespace COMP3351_Engine_Demo
         {
             // Set initial entity mind:
             _mind = _aiComponentManager.RequestMind<HostileMind>();
+            _mind.SetEntityUID(GetUID());
         }
 
         public void OnNewCollision(object sender, ICollisionInput args)

@@ -14,24 +14,27 @@ namespace COMP3351_Engine_Demo
 
         // Animation frame time
         private float _frameTime;
+        private int _entityUID;
 
         private IAudioPlayer _audioPlayer;
 
-        public HostileRunState(IAnimator pAnimator, IAudioPlayer pAudioPlayer)
+        public HostileRunState(int pEntityID, IAnimator pAnimator, IAudioPlayer pAudioPlayer)
         {
             _animator = pAnimator;
             _audioPlayer = pAudioPlayer;
             // INSTANTIATE _frameTime
             _frameTime = 0.009f;
+            _entityUID = pEntityID;
         }
 
         public string Trigger()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void Update(GameTime gameTime)
         {
+            ((IUpdatable)_animator).Update(gameTime);
             Behavior();
         }
 
@@ -42,7 +45,7 @@ namespace COMP3351_Engine_Demo
         /// <param name="texture"></param>
         private void Behavior()
         {
-            //_animator.Animate("Player", "SmileyWalkAtlas", 4, 4, _frameTime);
+            _animator.Animate(_entityUID, "Hostile", 1, 1, _frameTime);
         }
     }
 }
