@@ -116,29 +116,16 @@ namespace COMP3351_Engine_Demo
                     }
                 }                
             }
-            // update facing direction in entity
+            // update facing direction in entity to update texture orientation
             eInvertTexture(_facingDirectionX);
             // apply force to the physics component to move entity
             _physicsComponent.ApplyForce(force);
         }
 
-        // TranslateX override for player specific movement
-        public override float TranslateX()
-        {
-            _dLocation.X = _physicsComponent.GetPosition().X - _location.X;
-            _location.X += _dLocation.X;
-            return _dLocation.X;
-        }
-
-        // TranslateY override for player specific movement
-        public override float TranslateY()
-        {
-            // apply gravity to the entity
-            _dLocation.Y = _physicsComponent.GetPosition().Y - _location.Y;
-            _location.Y += _dLocation.Y;
-            return _dLocation.Y;
-        }
-
+        /// <summary>
+        /// method to move the mind and entiry location to match the location of the physics component
+        /// </summary>
+        /// <returns></returns>
         public override Vector2 Translate()
         {
             _dLocation = _physicsComponent.GetPosition() - _location;
@@ -198,8 +185,7 @@ namespace COMP3351_Engine_Demo
                     _physicsComponent.RemoveOverlapY(-_overlap.Y);
                     _onFloor = true;
                 }
-            }
-            
+            }  
         }
 
         /// <summary>
@@ -246,8 +232,9 @@ namespace COMP3351_Engine_Demo
             // on collision between the ceiling and the player top collider
             if (_collidedWith == "Ceiling" && _collidedThis == "PlayerT")
             {
-                // set jump value to 0
-                
+                // ensure player doesnt pass through ceiling
+                _location.Y -= _overlap.Y;
+                _physicsComponent.RemoveOverlapY(-_overlap.Y);
             }
         }
 
@@ -282,7 +269,7 @@ namespace COMP3351_Engine_Demo
             UpdateLocation(eGetLocation());
             // Update PhysicsComponent
             _physicsComponent.UpdatePhysics();
-
+            // update the location of the mind and the entity
             eTranslate(Translate());
 
             // Declare required states

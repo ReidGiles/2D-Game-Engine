@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using COMP3351_Game_Engine;
+using COMP3351_Game_Engine.Component.Engine;
 
 namespace COMP3351_Engine_Demo
 {
@@ -13,13 +14,24 @@ namespace COMP3351_Engine_Demo
         public Hostile()
         {
         }
+
+        /// <summary>
+        /// Initialis mind and physics component
+        /// </summary>
         public override void Initialise()
         {
             // Set initial entity mind:
-            _mind = _aiComponentManager.RequestMind<HostileMind>();
+            SetMind(_aiComponentManager.RequestMind<HostileMind>());
+            _physicsComponent = new PhysicsComponent(location, 1, new Vector2(0f, 0.9f), new Vector2(0f, 0.9f));
+            _mind.SetPhysicsComponent(_physicsComponent);
             _mind.SetEntityUID(GetUID());
         }
 
+        /// <summary>
+        /// On collision call collision method on mind
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void OnNewCollision(object sender, ICollisionInput args)
         {
             // Check if this entity is the one colliding
@@ -34,6 +46,9 @@ namespace COMP3351_Engine_Demo
             }
         }
 
+        /// <summary>
+        /// Set the colliders for the hosile
+        /// </summary>
         public override void SetCollider()
         {
             // Create a list of colliders
@@ -64,39 +79,6 @@ namespace COMP3351_Engine_Demo
 
             // SET has collider bool to true
             hasCollider = true;
-        }
-
-        /// <summary>
-        /// Overides Update() with unique entity behaviour.
-        /// </summary>
-        public override void Update(GameTime gameTime)
-        {
-            // if there are no colliders then set them using SetCollider method
-            if (!hasCollider)
-            {
-                SetCollider();
-            }
-            if (_mind != null)
-            {
-                //tell the mind the location of the player
-                _mind.UpdateLocation(location);
-                //tell the mind the value fo texture and check to see if texture needs to be inverted
-                InvertTexture(_mind.GetFacingDirection());
-                //updates the position of the player
-                float DX = _mind.TranslateX();
-                float DY = _mind.TranslateY();
-                Translate(DX, DY);
-                // updates the position of the colliders to follow the player
-                foreach (ICollider e in _colliders)
-                {
-                    e.Translate(DX, DY);
-                }
-            }
-            //else Console.WriteLine("Error: Mind is null");
-            /*Console.WriteLine("Top"+((ICreateCollider)_collider).CreateCollider()[0]);
-            Console.WriteLine("Bottom" + ((ICreateCollider)_collider).CreateCollider()[1]);
-            Console.WriteLine("Left" + ((ICreateCollider)_collider).CreateCollider()[2]);
-            Console.WriteLine("Right" + ((ICreateCollider)_collider).CreateCollider()[3]);*/
         }
     }
 }

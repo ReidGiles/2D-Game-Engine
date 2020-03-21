@@ -31,6 +31,11 @@ namespace COMP3351_Engine_Demo
             Console.WriteLine(GetUID());
         }
 
+        /// <summary>
+        /// On collision call collision method on mind
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void OnNewCollision(object sender, ICollisionInput args)
         {
             // Check if this entity is the one colliding
@@ -45,6 +50,9 @@ namespace COMP3351_Engine_Demo
             }
         }
 
+        /// <summary>
+        /// Set the colliders for the player
+        /// </summary>
         public override void SetCollider()
         {
             // Create a list of colliders
@@ -81,34 +89,6 @@ namespace COMP3351_Engine_Demo
 
             // SET has collider bool to true
             hasCollider = true;
-        }
-
-        /// <summary>
-        /// Overides Update() with unique entity behaviour.
-        /// </summary>
-        public override void Update(GameTime gameTime)
-        {
-            // if there are no colliders then set them using SetCollider method
-            /*
-            if (_mind != null)
-            {
-                //tell the mind the location of the player
-                _mind.UpdateLocation(location);
-                //tell the mind the value for texture and check to see if texture needs to be inverted
-                InvertTexture(_mind.GetFacingDirection());
-                //updates the position of the player
-                //float DX = _mind.TranslateX();
-                //float DY = _mind.TranslateY();
-                //Translate(DX, DY);
-                // Change in Entity location
-                Vector2 dlocation = _mind.Translate();
-                Translate(dlocation);
-            }*/
-            //else Console.WriteLine("Error: Mind is null");
-            /*Console.WriteLine("Top"+((ICreateCollider)_collider).CreateCollider()[0]);
-            Console.WriteLine("Bottom" + ((ICreateCollider)_collider).CreateCollider()[1]);
-            Console.WriteLine("Left" + ((ICreateCollider)_collider).CreateCollider()[2]);
-            Console.WriteLine("Right" + ((ICreateCollider)_collider).CreateCollider()[3]);*/
         }
     }
 }
