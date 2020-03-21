@@ -45,7 +45,7 @@ namespace COMP3351_Engine_Demo
         /// <param name="texture"></param>
         private void Behavior()
         {
-            _animator.Animate(_entityUID, "Hostile", 1, 1, _frameTime);
+            _animator.Animate(_entityUID, "Hostile", 1, 1, 0f);
         }
     }
 }

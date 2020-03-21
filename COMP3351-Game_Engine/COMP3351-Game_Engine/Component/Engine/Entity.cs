@@ -275,6 +275,7 @@ namespace COMP3351_Game_Engine
                 spriteBatch.Draw(_textureAtlas, _destinationRectangle, _sourceRectangle, Color.White,rotation,origin,textureEffect,0);
             }
             else spriteBatch.Draw(texture, location+origin, null, Color.AntiqueWhite, rotation, origin,1, textureEffect, 0);
+            _hasAtlas = false;
         }
 
         /// <summary>

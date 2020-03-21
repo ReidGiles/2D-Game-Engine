@@ -73,7 +73,7 @@ namespace COMP3351_Engine_Demo
         /// <param name="texture"></param>
         private void Behavior()
         {
-            _animator.Animate(_entityUID, "SmileyWalkAtlas", 4, 4, _frameTime);
+            //_animator.Animate(_entityUID, "SmileyWalkAtlas", 4, 4, _frameTime);
         }
     }
 }

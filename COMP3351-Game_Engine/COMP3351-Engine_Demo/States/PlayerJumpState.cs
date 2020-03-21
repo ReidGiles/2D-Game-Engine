@@ -58,7 +58,7 @@ namespace COMP3351_Engine_Demo
         private void Behavior()
         {
             _animator.Animate(_entityUID, "SmileyWalkAtlas", 4, 4, _frameTime);
-            _audioPlayer.PlaySound("Jump");
+            //_audioPlayer.PlaySound("Jump");
         }
     }
 }

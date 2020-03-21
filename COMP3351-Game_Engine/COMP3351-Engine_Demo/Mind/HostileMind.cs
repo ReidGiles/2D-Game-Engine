@@ -99,7 +99,7 @@ namespace COMP3351_Engine_Demo
             // on collision with Floor change floorCollide flag to true
             if (!_onFloor)
             {
-                if (_collidedWith == "Floor" && _collidedThis == "PlayerB")
+                if (_collidedWith == "Floor" && _collidedThis == "HostileB")
                 {
                     _inAir = false;
                     _location.Y -= _overlap.Y;

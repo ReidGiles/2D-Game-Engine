@@ -74,7 +74,7 @@ namespace COMP3351_Engine_Demo
             
             // Set Collider for the Bottom of the Player
             ColliderOrigin.X = location.X + 0.5f * texture.Width;
-            ColliderOrigin.Y = location.Y + texture.Height-5;
+            ColliderOrigin.Y = location.Y + texture.Height;
             // Add collider to list
             _colliders.Add(new RectCollider(ColliderOrigin, texture.Width, 10, "PlayerB"));
 

@@ -42,7 +42,9 @@ namespace COMP3351_Engine_Demo
             // Load saws
             _demo.Spawn<Saw>("Saw", _demo.LoadTexture("Saw"), 100, (900 - _demo.LoadTexture("Saw").Height) - _demo.LoadTexture("Floor").Height);
             _demo.Spawn<Saw>("Saw", _demo.LoadTexture("Saw"), 400, (900 - _demo.LoadTexture("Saw").Height) - _demo.LoadTexture("Floor").Height);
-            _demo.Spawn<Saw>("Saw", _demo.LoadTexture("Saw"), 700, (900 - _demo.LoadTexture("Saw").Height) - _demo.LoadTexture("Floor").Height);                    
+            _demo.Spawn<Saw>("Saw", _demo.LoadTexture("Saw"), 700, (900 - _demo.LoadTexture("Saw").Height) - _demo.LoadTexture("Floor").Height);
+
+            _demo.Spawn<Platform>("Platform", _demo.LoadTexture("Platform"), 200, 700);
         }
 
         public void OnNewKeyboardInput(object sender, IKeyboardInput args)
@@ -54,7 +56,7 @@ namespace COMP3351_Engine_Demo
                     _ignoreInput = true;
 
                     // Spawn Player
-                    _demo.Spawn<Player>("Player", _demo.LoadTexture("Player_Idle"), 0, 500);
+                    _demo.Spawn<Player>("Player", _demo.LoadTexture("Smiley"), 0, 500);
                 }
                 else if (args.GetInputKey().Contains(Keys.H))
                 {
