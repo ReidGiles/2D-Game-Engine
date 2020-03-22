@@ -17,7 +17,7 @@ namespace COMP3351_Engine_Demo
         public World(Demo demo)
         {
             _demo = demo;
-            _timer = new Timer(3000);
+            _timer = new Timer(1000);
             _timer.Elapsed += OnTimedEvent;
             _timer.AutoReset = true;
             _timer.Enabled = true;
@@ -45,6 +45,10 @@ namespace COMP3351_Engine_Demo
             _demo.Spawn<Saw>("Saw", _demo.LoadTexture("Saw"), 700, (900 - _demo.LoadTexture("Saw").Height) - _demo.LoadTexture("Floor").Height);
 
             _demo.Spawn<Platform>("Platform", _demo.LoadTexture("Platform"), 200, 700);
+            _demo.Spawn<Platform>("Platform", _demo.LoadTexture("Platform"), 500, 600);
+            _demo.Spawn<Platform>("Platform", _demo.LoadTexture("Platform"), 800, 500);
+            _demo.Spawn<Platform>("Platform", _demo.LoadTexture("Platform"), 1100, 400);
+            _demo.Spawn<Platform>("Platform", _demo.LoadTexture("Platform"), 1400, 300);
         }
 
         public void OnNewKeyboardInput(object sender, IKeyboardInput args)

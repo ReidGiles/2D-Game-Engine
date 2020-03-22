@@ -62,8 +62,8 @@ namespace COMP3351_Engine_Demo
         private void DeclareStates()
         {
             _stateDictionary.Add("Idle", new PlayerIdleState(_entityUID, _animator, _audioPlayer, _args));
-            _stateDictionary.Add("Jump", new PlayerJumpState(_entityUID, _animator, _audioPlayer, _args));
-            _stateDictionary.Add("Run", new PlayerRunState(_entityUID, _animator, _audioPlayer, _args));
+            _stateDictionary.Add("Jump", new PlayerJumpState(_entityUID, _animator, _audioPlayer, _args, _physicsComponent));
+            _stateDictionary.Add("Run", new PlayerRunState(_entityUID, _animator, _audioPlayer, _args, eInvertTexture, _physicsComponent));
 
             _currentState = _stateDictionary["Idle"];
         }
@@ -81,45 +81,6 @@ namespace COMP3351_Engine_Demo
         // Handle Key input
         private void KeyboardInput()
         {
-            //Declare a vector to store the force needed to move
-            Vector2 force = new Vector2(0, 0);
-
-            // Player input controlling movement, only active on key down
-            foreach (Keys k in _args.GetInputKey())
-            {
-
-                // if player presses right arrow or D
-                if (k == Keys.Right || k == Keys.D)
-                {
-                    // set facing direction to right(1)
-                    _facingDirectionX = 1;
-                    force.X = _xSpeed * _facingDirectionX;
-                }
-
-                // if player presses left arrow or A
-                if (k == Keys.Left || k == Keys.A)
-                {
-                    // set facing direction to left(-1)
-                    _facingDirectionX = -1;
-                    force.X = _xSpeed * _facingDirectionX;
-                }
-
-                // if player is not inAir
-                if (!_inAir)
-                {
-                    // if player presses up arrow, W, or space
-                    if (k == Keys.Up || k == Keys.Space || k == Keys.W)
-                    {
-                        // set jump value and inAir status to true
-                        force.Y = -_ySpeed;
-                        _inAir = true;
-                    }
-                }                
-            }
-            // update facing direction in entity to update texture orientation
-            eInvertTexture(_facingDirectionX);
-            // apply force to the physics component to move entity
-            _physicsComponent.ApplyForce(force);
         }
 
         /// <summary>

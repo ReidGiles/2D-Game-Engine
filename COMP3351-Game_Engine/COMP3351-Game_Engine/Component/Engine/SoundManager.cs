@@ -27,6 +27,40 @@ namespace COMP3351_Game_Engine
         /// <summary>
         /// Plays sounds based on parameters
         /// </summary>
+        public void PlaySound(string pSound, float pVolume, bool pRepeating)
+        {
+            SoundEffect sound = _content.Load<SoundEffect>(pSound);
+            SoundEffectInstance instance = sound.CreateInstance();
+            instance.Volume = pVolume;
+            instance.IsLooped = pRepeating;
+            instance.Play();
+        }
+
+        /// <summary>
+        /// Plays sounds based on parameters
+        /// </summary>
+        public void PlaySound(string pSound, float pVolume)
+        {
+            SoundEffect sound = _content.Load<SoundEffect>(pSound);
+            SoundEffectInstance instance = sound.CreateInstance();
+            instance.Volume = pVolume;
+            instance.Play();
+        }
+
+        /// <summary>
+        /// Plays sounds based on parameters
+        /// </summary>
+        public void PlaySound(string pSound, bool pRepeating)
+        {
+            SoundEffect sound = _content.Load<SoundEffect>(pSound);
+            SoundEffectInstance instance = sound.CreateInstance();
+            instance.IsLooped = pRepeating;
+            instance.Play();
+        }
+
+        /// <summary>
+        /// Plays sounds based on parameters
+        /// </summary>
         public void PlaySound(string pSound)
         {
             SoundEffect sound = _content.Load<SoundEffect>(pSound);
