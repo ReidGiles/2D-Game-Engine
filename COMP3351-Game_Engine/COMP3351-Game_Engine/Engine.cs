@@ -157,6 +157,15 @@ namespace COMP3351_Game_Engine
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Spawn an entity into the world
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="pName"></param>
+        /// <param name="pTexture"></param>
+        /// <param name="pX"></param>
+        /// <param name="pY"></param>
+        /// <returns></returns>
         public IEntity Spawn<T>(string pName, Texture2D pTexture, float pX, float pY) where T : IEntity, new()
         {
             IEntity entity = entityManager.RequestInstance<T>(pName, pTexture);
@@ -164,39 +173,78 @@ namespace COMP3351_Game_Engine
             return entity;
         }
 
+        /// <summary>
+        /// Return a texture
+        /// </summary>
+        /// <param name="pFileName"></param>
+        /// <returns></returns>
         public Texture2D LoadTexture(string pFileName)
         {
             return Content.Load<Texture2D>(pFileName);
         }
 
+        /// <summary>
+        /// Play sound with a filename
+        /// </summary>
+        /// <param name="pFileName"></param>
         public void PlaySound(string pFileName)
         {
+            _audioManager.PlaySound(pFileName);
         }
 
+        /// <summary>
+        /// Play a song with a filename, volume and repeating switch
+        /// </summary>
+        /// <param name="pFileName"></param>
+        /// <param name="pVolume"></param>
+        /// <param name="pRepeating"></param>
         public void PlaySong(string pFileName, float pVolume, bool pRepeating)
         {
             _audioManager.PlaySong(pFileName, pVolume, pRepeating);
         }
 
+        /// <summary>
+        /// Play a soun
+        /// </summary>
+        /// <param name="pFileName"></param>
+        /// <param name="pVolume"></param>
         public void PlaySong(string pFileName, float pVolume)
         {
             _audioManager.PlaySong(pFileName, pVolume, false);
         }
 
+        /// <summary>
+        /// Play a song with a filename and a repeating switch
+        /// </summary>
+        /// <param name="pFileName"></param>
+        /// <param name="pRepeating"></param>
         public void PlaySong(string pFileName, bool pRepeating)
         {
             _audioManager.PlaySong(pFileName, 1.00f, pRepeating);
         }
 
+        /// <summary>
+        /// Play a song with only a filename
+        /// </summary>
+        /// <param name="pFileName"></param>
         public void PlaySong(string pFileName)
         {
             _audioManager.PlaySong(pFileName, 1.00f, false);
         }
 
+        /// <summary>
+        /// Subscrible a keyboard listener
+        /// </summary>
+        /// <param name="pListener"></param>
         public void SubscribeListener(IKeyboardListener pListener)
         {
             inputManager.AddListener(pListener.OnNewKeyboardInput);
         }
+
+        /// <summary>
+        /// Subscribe a mouse listener
+        /// </summary>
+        /// <param name="pListener"></param>
         public void SubscribeListener(IMouseListener pListener)
         {
             inputManager.AddListener(pListener.OnNewMouseInput);

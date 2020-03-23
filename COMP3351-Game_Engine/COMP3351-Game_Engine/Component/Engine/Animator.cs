@@ -7,6 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Various elements of animation throughout this project have been influenced by a tutorial provided by RB Whitaker's tutorials. The code here is adopted from the concepts taught and 
+/// required great change to be intoduced to our game engine, but this reference sits here for safety.
+/// 
+/// URL: http://rbwhitaker.wikidot.com/texture-atlases-1
+/// Author: RB Whitaker
+/// Date: Unknown
+/// </summary>
+
 namespace COMP3351_Game_Engine
 {
     class Animator : IAnimator, IUpdatable

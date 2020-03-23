@@ -27,9 +27,7 @@ namespace COMP3351_Engine_Demo
 
         private IPhysicsComponent _physicsComponent;
 
-        private Timer _timer;
-
-        private bool _ignoreInput;
+        private float _soundTime;
 
         /// <summary>
         /// PlayerJumpState constructor
@@ -48,16 +46,6 @@ namespace COMP3351_Engine_Demo
             _ySpeed = 3;
 
             _physicsComponent = pPhysicsComponent;
-
-            _timer = new Timer(1000);
-            _timer.Elapsed += OnTimedEvent;
-            _timer.AutoReset = true;
-            _timer.Enabled = true;
-        }
-
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            _ignoreInput = false;
         }
 
         /// <summary>
@@ -66,6 +54,9 @@ namespace COMP3351_Engine_Demo
         public void Update(GameTime gameTime)
         {
             Behavior();
+
+            // Calculate elapsed game time for audio
+            _soundTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
         public string Trigger()
         {
@@ -83,7 +74,11 @@ namespace COMP3351_Engine_Demo
         private void Behavior()
         {
             _animator.Animate(_entityUID, "SmileyWalkAtlas", 4, 4, _frameTime);
-            //_audioPlayer.PlaySound("Jump");
+            if (_soundTime > 0.3)
+            {
+                _audioPlayer.PlaySound("Jump");
+                _soundTime = 0f;
+            }
 
             //Declare a vector to store the force needed to move
             Vector2 force = new Vector2(0, 0);

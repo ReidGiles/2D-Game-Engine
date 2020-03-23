@@ -7,6 +7,14 @@ using Microsoft.Xna.Framework.Input;
 using System.Timers;
 using COMP3351_Game_Engine;
 
+/// <summary>
+/// Timer code reference:
+/// 
+/// URL: https://docs.microsoft.com/en-us/dotnet/api/system.timers.timer?view=netframework-4.8
+/// Author: Microsoft
+/// Date: Unknown
+/// </summary>
+
 namespace COMP3351_Engine_Demo
 {
     class World : IKeyboardListener
