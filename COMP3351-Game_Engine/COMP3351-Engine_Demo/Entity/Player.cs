@@ -11,7 +11,7 @@ using COMP3351_Game_Engine;
 
 namespace COMP3351_Engine_Demo
 {
-    class Player : Entity, IPlayer, ICollisionListener
+    class Player : Entity, ICollisionListener
     {
         public Player()
         {

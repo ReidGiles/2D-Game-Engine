@@ -35,7 +35,7 @@ namespace COMP3351_Game_Engine.Component.Engine
         public PhysicsComponent(Vector2 position,float mass, Vector2 restitution,Vector2 damping)
         {
             // Set gravity
-            _gravity = new Vector2(0,2f);
+            _gravity = new Vector2(0,1.5f);
 
             // Set _position
             _position = position;
@@ -92,6 +92,11 @@ namespace COMP3351_Game_Engine.Component.Engine
         public void RemoveOverlapY(float pOverlapY)
         {
             _position.Y += pOverlapY;
+        }
+
+        public void RemoveOverlapX(float pOverlapX)
+        {
+            _position.X += pOverlapX;
         }
     }
 }

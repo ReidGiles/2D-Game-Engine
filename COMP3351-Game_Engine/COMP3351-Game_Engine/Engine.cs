@@ -94,6 +94,7 @@ namespace COMP3351_Game_Engine
             backgroundLocation2 = new Vector2(backgroundLocation.X + ScreenWidth + 1, 0);
             backgroundLocation3 = new Vector2(-ScreenWidth / 2, 0);
             backgroundLocation4 = new Vector2(-ScreenWidth / 2, 0);
+
             // initialise
             base.Initialize();
         }
@@ -171,6 +172,11 @@ namespace COMP3351_Game_Engine
             IEntity entity = entityManager.RequestInstance<T>(pName, pTexture);
             sceneManager.Spawn(entity, pX, pY);
             return entity;
+        }
+
+        public void Kill(IEntity pEntity)
+        {
+            entityManager.Terminate(pEntity.GetUID());
         }
 
         /// <summary>

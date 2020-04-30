@@ -68,7 +68,8 @@ namespace COMP3351_Game_Engine
             _gameTime = gameTime;
 
             // Set graphics background colour
-            _graphicsDeviceManager.GraphicsDevice.Clear(Color.Purple);
+            Color cl5 = new Color(52, 116, 116);
+            _graphicsDeviceManager.GraphicsDevice.Clear(cl5);
 
             // Set cameraPos to follow the player on the x axis if there is one
             if (_sceneManager.GetEntity("Player") != null)
